@@ -934,7 +934,6 @@
         }
     </style>
 </head>
-    
 <body>
     <!-- Profile Section -->
     <div class="profile-section">
@@ -1103,15 +1102,12 @@
     </div>
 
     <script>
-        const SUPABASE_URL = "https://njpbnagjijmgvddgztzt.supabase.co";
-        const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5qcGJuYWdqaWptZ3ZkZGd6dHp0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIyNzk1NzYsImV4cCI6MjA4Nzg1NTU3Nn0.cDVgF3ADTJMaI80ZRxQJTnma7p-1zEJsiGFPfdZdwtQ";
-        let artworks = [];
-        let likes = {};
-        let comments = {};
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         // Global variables
         let isLoggedIn = false;
         let currentArtworkId = null;
+        let artworks = JSON.parse(localStorage.getItem('artworks')) || [];
+        let comments = JSON.parse(localStorage.getItem('comments')) || {};
+        let likes = JSON.parse(localStorage.getItem('likes')) || {};
         let profile = JSON.parse(localStorage.getItem('profile')) || {
             name: "Marah Kayal",
             description: "Passionate artist exploring the intersection of contemporary art and digital expression. Welcome to my creative journey where each piece tells a unique story.",
@@ -1268,70 +1264,46 @@
         });
 
         // Upload functionality
-async function uploadArtwork() {
-    if (!isLoggedIn) {
-        alert("Admin access required.");
-        return;
-    }
+        function uploadArtwork() {
+            const fileInput = document.getElementById('imageFile');
+            const title = document.getElementById('artTitle').value.trim();
+            const description = document.getElementById('artDescription').value.trim();
+            const tags = document.getElementById('artTags').value.trim();
 
-    const fileInput = document.getElementById("imageFile");
-    const title = document.getElementById("artTitle").value.trim();
-    const description = document.getElementById("artDescription").value.trim();
-    const tags = document.getElementById("artTags").value.trim();
+            if (!fileInput.files[0] || !title) {
+                alert('Please select an image and enter a title.');
+                return;
+            }
 
-    if (!fileInput.files[0] || !title) {
-        alert("Please select an image and enter a title.");
-        return;
-    }
+            const file = fileInput.files[0];
+            const reader = new FileReader();
 
-    const file = fileInput.files[0];
-    const fileName = Date.now() + "_" + file.name;
+            reader.onload = function(e) {
+                const artwork = {
+                    id: Date.now(),
+                    image: e.target.result,
+                    title: title,
+                    description: description,
+                    tags: tags.split(',').map(tag => tag.trim()).filter(tag => tag),
+                    uploadDate: new Date().toISOString()
+                };
 
-    // Upload image to Supabase storage
-    const { error: uploadError } = await supabase.storage
-        .from("artworks")
-        .upload(fileName, file);
+                artworks.unshift(artwork);
+                localStorage.setItem('artworks', JSON.stringify(artworks));
+                
+                // Clear form
+                fileInput.value = '';
+                document.getElementById('artTitle').value = '';
+                document.getElementById('artDescription').value = '';
+                document.getElementById('artTags').value = '';
+                resetFileInput();
+                
+                loadGallery();
+                alert('Artwork published successfully!');
+            };
 
-    if (uploadError) {
-        console.error(uploadError);
-        alert("Image upload failed.");
-        return;
-    }
-
-    // Get public URL
-    const { data: publicUrlData } = supabase.storage
-        .from("artworks")
-        .getPublicUrl(fileName);
-
-    const imageUrl = publicUrlData.publicUrl;
-
-    // Insert into database
-    const { error: insertError } = await supabase
-        .from("artworks")
-        .insert([
-            {
-                title: title,
-                description: description,
-                image_url: imageUrl,
-                tags: tags,
-            },
-        ]);
-
-    if (insertError) {
-        console.error(insertError);
-        alert("Database insert failed.");
-        return;
-    }
-
-    // Reset form
-    fileInput.value = "";
-    document.getElementById("artTitle").value = "";
-    document.getElementById("artDescription").value = "";
-    document.getElementById("artTags").value = "";
-
-    alert("Artwork uploaded successfully!");
-    loadGallery();
-}
+            reader.readAsDataURL(file);
+        }
 
         function resetFileInput() {
             const label = document.querySelector('.file-input-button');
@@ -1345,35 +1317,21 @@ async function uploadArtwork() {
         }
 
         // Gallery functions
-       async function loadGallery() {
-    const gallery = document.getElementById('gallery');
-    gallery.innerHTML = "Loading...";
+        function loadGallery() {
+            const gallery = document.getElementById('gallery');
+            gallery.innerHTML = '';
 
-    const { data, error } = await supabase
-        .from("artworks")
-        .select("*")
-        .order("created_at", { ascending: false });
+            if (artworks.length === 0) {
+                gallery.innerHTML = createEmptyState();
+                return;
+            }
 
-    if (error) {
-        gallery.innerHTML = "Error loading artworks.";
-        console.error(error);
-        return;
-    }
+            artworks.forEach(artwork => {
+                const card = createArtworkCard(artwork);
+                gallery.appendChild(card);
+            });
+        }
 
-    artworks = data; // 🔥 THIS WAS MISSING
-
-    gallery.innerHTML = "";
-
-    if (data.length === 0) {
-        gallery.innerHTML = createEmptyState();
-        return;
-    }
-
-    data.forEach(artwork => {
-        const card = createArtworkCard(artwork);
-        gallery.appendChild(card);
-    });
-}
         function createEmptyState() {
             return `
                 <div class="empty-state">
@@ -1453,7 +1411,7 @@ async function uploadArtwork() {
             const isLiked = localStorage.getItem(`liked_${artwork.id}`) === 'true';
 
             card.innerHTML = `
-                <img src="${artwork.image_url}" alt="${artwork.title}" class="artwork-image">
+                <img src="${artwork.image}" alt="${artwork.title}" class="artwork-image">
                 <div class="artwork-info">
                     <h3 class="artwork-title">${artwork.title}</h3>
                     <p class="artwork-description">${artwork.description}</p>
@@ -1962,6 +1920,5 @@ async function uploadArtwork() {
         console.log('Press Ctrl+Shift+A for quick admin access');
         console.log('Features: Profile editing, artwork upload, comments, likes, search');
     </script>
-    
 </body>
 </html>

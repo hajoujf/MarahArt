@@ -1,0 +1,1328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artisan Gallery - Contemporary Art Showcase</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #fafafa;
+            min-height: 100vh;
+            color: #1a1a1a;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        /* Header */
+        .header {
+            background: #ffffff;
+            padding: 32px 0;
+            border-bottom: 1px solid #e5e5e5;
+            margin-bottom: 48px;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            letter-spacing: -0.025em;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: #1a1a1a;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2a2a2a;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: #f5f5f5;
+            color: #1a1a1a;
+            border: 1px solid #e5e5e5;
+        }
+
+        .btn-secondary:hover {
+            background: #eeeeee;
+            transform: translateY(-1px);
+        }
+
+        .welcome-text {
+            font-size: 14px;
+            color: #666;
+            font-weight: 500;
+        }
+
+        /* Login Form */
+        .login-form {
+            background: white;
+            padding: 48px;
+            border-radius: 12px;
+            border: 1px solid #e5e5e5;
+            max-width: 400px;
+            margin: 80px auto;
+        }
+
+        .login-form h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 32px;
+            color: #1a1a1a;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #1a1a1a;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.2s ease;
+            font-family: inherit;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #1a1a1a;
+            box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.1);
+        }
+
+        /* Gallery Grid */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 32px;
+            margin-top: 48px;
+        }
+
+        .artwork-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #e5e5e5;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .artwork-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border-color: #d1d5db;
+        }
+
+        .artwork-image {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #9ca3af;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .artwork-info {
+            padding: 24px;
+        }
+
+        .artwork-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1a1a1a;
+        }
+
+        .artwork-description {
+            color: #6b7280;
+            margin-bottom: 16px;
+            line-height: 1.5;
+            font-size: 14px;
+        }
+
+        .artwork-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .tag {
+            background: #f3f4f6;
+            color: #6b7280;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .artwork-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .like-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #6b7280;
+            transition: color 0.2s ease;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 8px 12px;
+            border-radius: 6px;
+        }
+
+        .like-btn:hover {
+            color: #dc2626;
+            background: #fef2f2;
+        }
+
+        .like-btn.liked {
+            color: #dc2626;
+            background: #fef2f2;
+        }
+
+        .like-icon {
+            width: 16px;
+            height: 16px;
+        }
+
+        .admin-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .admin-actions .btn {
+            padding: 8px 16px;
+            font-size: 12px;
+        }
+
+        /* Empty State */
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 80px 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .empty-state-icon {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 32px;
+            background: #f3f4f6;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .empty-state-icon svg {
+            width: 48px;
+            height: 48px;
+            color: #9ca3af;
+        }
+
+        .empty-state h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 12px;
+        }
+
+        .empty-state p {
+            color: #6b7280;
+            font-size: 16px;
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+
+        .empty-state .btn {
+            padding: 14px 28px;
+            font-size: 16px;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-header {
+            padding: 24px 32px;
+            border-bottom: 1px solid #e5e5e5;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .modal-body {
+            padding: 32px;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #6b7280;
+            padding: 4px;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .close-btn:hover {
+            color: #1a1a1a;
+            background: #f3f4f6;
+        }
+
+        .detail-image {
+            width: 100%;
+            max-height: 500px;
+            object-fit: contain;
+            border-radius: 8px;
+            margin-bottom: 32px;
+            background: #f8f9fa;
+        }
+
+        /* Upload Form */
+        .upload-form {
+            background: white;
+            padding: 48px;
+            border-radius: 12px;
+            border: 1px solid #e5e5e5;
+            margin-bottom: 48px;
+        }
+
+        .upload-form h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 32px;
+            color: #1a1a1a;
+        }
+
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
+            margin-bottom: 24px;
+        }
+
+        .file-input {
+            position: absolute;
+            left: -9999px;
+        }
+
+        .file-input-button {
+            width: 100%;
+            padding: 48px 24px;
+            border: 2px dashed #d1d5db;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: #f9fafb;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .file-input-button:hover {
+            background: #f3f4f6;
+            border-color: #9ca3af;
+        }
+
+        .file-input-icon {
+            width: 48px;
+            height: 48px;
+            color: #6b7280;
+        }
+
+        .file-input-text {
+            font-size: 16px;
+            font-weight: 500;
+            color: #1a1a1a;
+        }
+
+        .file-input-subtext {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        /* Comments */
+        .comments-section {
+            margin-top: 48px;
+            padding-top: 32px;
+            border-top: 1px solid #e5e5e5;
+        }
+
+        .comments-section h4 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: #1a1a1a;
+        }
+
+        .comment-form {
+            margin-bottom: 32px;
+            padding: 24px;
+            background: #f9fafb;
+            border-radius: 8px;
+            border: 1px solid #e5e5e5;
+        }
+
+        .comment-form input, .comment-form textarea {
+            width: 100%;
+            padding: 12px 16px;
+            margin-bottom: 16px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            resize: vertical;
+            font-family: inherit;
+            font-size: 14px;
+        }
+
+        .comment-form input:focus, .comment-form textarea:focus {
+            outline: none;
+            border-color: #1a1a1a;
+            box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.1);
+        }
+
+        .comment {
+            padding: 20px;
+            margin-bottom: 16px;
+            background: #f9fafb;
+            border-radius: 8px;
+            border-left: 3px solid #1a1a1a;
+        }
+
+        .comment-author {
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .comment-text {
+            color: #4b5563;
+            line-height: 1.5;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .comment-date {
+            font-size: 12px;
+            color: #9ca3af;
+        }
+
+        /* Edit Form */
+        .edit-form {
+            background: #f9fafb;
+            padding: 24px;
+            border-radius: 8px;
+            margin-top: 24px;
+            border: 1px solid #e5e5e5;
+        }
+
+        .edit-form h4 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #1a1a1a;
+        }
+
+        .edit-form input, .edit-form textarea {
+            width: 100%;
+            margin-bottom: 16px;
+            padding: 12px 16px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-family: inherit;
+        }
+
+        .edit-form input:focus, .edit-form textarea:focus {
+            outline: none;
+            border-color: #1a1a1a;
+            box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.1);
+        }
+
+        .edit-form-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        /* Search Bar */
+        .search-container {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            margin-bottom: 32px;
+            border: 1px solid #e5e5e5;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 16px 20px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 16px;
+            font-family: inherit;
+            transition: border-color 0.2s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #1a1a1a;
+            box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.1);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 16px;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+                padding: 0 16px;
+            }
+            
+            .gallery {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .modal-content {
+                margin: 10px;
+                max-height: 95vh;
+            }
+            
+            .modal-body, .upload-form, .login-form {
+                padding: 24px;
+            }
+            
+            .nav-buttons {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.5rem;
+            }
+            
+            .btn {
+                padding: 10px 20px;
+                font-size: 13px;
+            }
+            
+            .artwork-info {
+                padding: 20px;
+            }
+
+            .empty-state {
+                padding: 60px 16px;
+            }
+
+            .empty-state-icon {
+                width: 100px;
+                height: 100px;
+                margin-bottom: 24px;
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Loading States */
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="logo">Artisan Gallery</div>
+            <div class="nav-buttons">
+                <span id="welcomeText" class="welcome-text hidden">Welcome back, Admin</span>
+                <button id="loginBtn" class="btn btn-primary">Admin Access</button>
+                <button id="logoutBtn" class="btn btn-secondary hidden">Sign Out</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Login Form -->
+        <div id="loginForm" class="login-form hidden">
+            <h2>Admin Authentication</h2>
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" placeholder="Enter your username">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter your password">
+            </div>
+            <button onclick="login()" class="btn btn-primary" style="width: 100%; margin-bottom: 16px;">Sign In</button>
+            <button onclick="hideLogin()" class="btn btn-secondary" style="width: 100%;">Cancel</button>
+            <div id="loginError" style="color: #dc2626; margin-top: 16px; text-align: center; font-size: 14px;"></div>
+        </div>
+
+        <!-- Upload Form (Admin Only) -->
+        <div id="uploadSection" class="upload-form hidden">
+            <h3>Add New Artwork</h3>
+            <div class="file-input-wrapper">
+                <input type="file" id="imageFile" class="file-input" accept="image/*">
+                <label for="imageFile" class="file-input-button">
+                    <svg class="file-input-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                    </svg>
+                    <div class="file-input-text">Choose artwork image</div>
+                    <div class="file-input-subtext">Supports JPG, PNG, GIF up to 5MB</div>
+                </label>
+            </div>
+            <div class="form-group">
+                <label for="artTitle">Artwork Title</label>
+                <input type="text" id="artTitle" placeholder="Enter artwork title">
+            </div>
+            <div class="form-group">
+                <label for="artDescription">Description</label>
+                <textarea id="artDescription" rows="3" placeholder="Describe the artwork, technique, or inspiration..."></textarea>
+            </div>
+            <div class="form-group">
+                <label for="artTags">Tags</label>
+                <input type="text" id="artTags" placeholder="painting, modern, abstract, oil, canvas">
+            </div>
+            <button onclick="uploadArtwork()" class="btn btn-primary">Publish Artwork</button>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="search-container">
+            <input type="text" id="searchInput" class="search-input" placeholder="Search artworks by title, description, or tags...">
+        </div>
+
+        <!-- Gallery -->
+        <div id="gallery" class="gallery">
+            <!-- Artworks will be dynamically loaded here -->
+        </div>
+    </div>
+
+    <!-- Artwork Detail Modal -->
+    <div id="artworkModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Artwork Details</h3>
+                <button class="close-btn" onclick="closeModal()">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <img id="modalImage" class="detail-image" alt="Artwork">
+                <div id="modalInfo">
+                    <h4 id="modalArtTitle" style="font-size: 1.5rem; font-weight: 600; margin-bottom: 16px; color: #1a1a1a;"></h4>
+                    <p id="modalArtDescription" style="color: #4b5563; margin-bottom: 24px; line-height: 1.6;"></p>
+                    <div id="modalArtTags" class="artwork-tags" style="margin-bottom: 24px;"></div>
+                    <div class="artwork-actions">
+                        <button id="modalLikeBtn" class="like-btn" onclick="toggleLike(currentArtworkId)">
+                            <svg class="like-icon" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span id="modalLikeCount">0</span> <span style="color: #6b7280;">likes</span>
+                        </button>
+                        <div id="modalAdminActions" class="admin-actions hidden">
+                            <button class="btn btn-secondary" onclick="editArtwork(currentArtworkId)">Edit</button>
+                            <button class="btn btn-secondary" style="background: #dc2626; color: white;" onclick="deleteArtwork(currentArtworkId)">Delete</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Edit Form -->
+                <div id="editForm" class="edit-form hidden">
+                    <h4>Edit Artwork</h4>
+                    <input type="text" id="editTitle" placeholder="Artwork title">
+                    <textarea id="editDescription" rows="3" placeholder="Description"></textarea>
+                    <input type="text" id="editTags" placeholder="Tags (comma-separated)">
+                    <div class="edit-form-actions">
+                        <button class="btn btn-primary" onclick="saveEdit(currentArtworkId)">Save Changes</button>
+                        <button class="btn btn-secondary" onclick="cancelEdit()">Cancel</button>
+                    </div>
+                </div>
+
+                <!-- Comments Section -->
+                <div class="comments-section">
+                    <h4>Comments</h4>
+                    <div class="comment-form">
+                        <input type="text" id="commenterName" placeholder="Your name (optional)">
+                        <textarea id="commentText" rows="3" placeholder="Share your thoughts about this artwork..."></textarea>
+                        <button class="btn btn-primary" onclick="addComment(currentArtworkId)">Post Comment</button>
+                    </div>
+                    <div id="commentsList">
+                        <!-- Comments will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let isLoggedIn = false;
+        let currentArtworkId = null;
+        let artworks = JSON.parse(localStorage.getItem('artworks')) || [];
+        let comments = JSON.parse(localStorage.getItem('comments')) || {};
+        let likes = JSON.parse(localStorage.getItem('likes')) || {};
+
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', function() {
+            loadGallery();
+            updateUI();
+            setupSearchFunctionality();
+        });
+
+        // Login functionality
+        function showLogin() {
+            document.getElementById('loginForm').classList.remove('hidden');
+        }
+
+        function hideLogin() {
+            document.getElementById('loginForm').classList.add('hidden');
+            document.getElementById('loginError').textContent = '';
+        }
+
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (username === 'admin' && password === 'Aa123456') {
+                isLoggedIn = true;
+                hideLogin();
+                updateUI();
+                document.getElementById('username').value = '';
+                document.getElementById('password').value = '';
+            } else {
+                document.getElementById('loginError').textContent = 'Invalid credentials. Please try again.';
+            }
+        }
+
+        function logout() {
+            isLoggedIn = false;
+            updateUI();
+        }
+
+        function updateUI() {
+            const loginBtn = document.getElementById('loginBtn');
+            const logoutBtn = document.getElementById('logoutBtn');
+            const welcomeText = document.getElementById('welcomeText');
+            const uploadSection = document.getElementById('uploadSection');
+            
+            if (isLoggedIn) {
+                loginBtn.classList.add('hidden');
+                logoutBtn.classList.remove('hidden');
+                welcomeText.classList.remove('hidden');
+                uploadSection.classList.remove('hidden');
+            } else {
+                loginBtn.classList.remove('hidden');
+                logoutBtn.classList.add('hidden');
+                welcomeText.classList.add('hidden');
+                uploadSection.classList.add('hidden');
+            }
+            
+            // Update admin actions visibility
+            document.querySelectorAll('.admin-actions').forEach(el => {
+                if (isLoggedIn) {
+                    el.classList.remove('hidden');
+                } else {
+                    el.classList.add('hidden');
+                }
+            });
+        }
+
+        // Event listeners
+        document.getElementById('loginBtn').addEventListener('click', showLogin);
+        document.getElementById('logoutBtn').addEventListener('click', logout);
+
+        // Upload functionality
+        function uploadArtwork() {
+            const fileInput = document.getElementById('imageFile');
+            const title = document.getElementById('artTitle').value.trim();
+            const description = document.getElementById('artDescription').value.trim();
+            const tags = document.getElementById('artTags').value.trim();
+
+            if (!fileInput.files[0] || !title) {
+                alert('Please select an image and enter a title.');
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                const artwork = {
+                    id: Date.now(),
+                    image: e.target.result,
+                    title: title,
+                    description: description,
+                    tags: tags.split(',').map(tag => tag.trim()).filter(tag => tag),
+                    uploadDate: new Date().toISOString()
+                };
+
+                artworks.unshift(artwork);
+                localStorage.setItem('artworks', JSON.stringify(artworks));
+                
+                // Clear form
+                fileInput.value = '';
+                document.getElementById('artTitle').value = '';
+                document.getElementById('artDescription').value = '';
+                document.getElementById('artTags').value = '';
+                resetFileInput();*
+                                loadGallery();
+                alert('Artwork published successfully!');
+            };
+
+            reader.readAsDataURL(file);
+        }
+
+        function resetFileInput() {
+            const label = document.querySelector('.file-input-button');
+            label.innerHTML = `
+                <svg class="file-input-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                </svg>
+                <div class="file-input-text">Choose artwork image</div>
+                <div class="file-input-subtext">Supports JPG, PNG, GIF up to 5MB</div>
+            `;
+        }
+
+        // Gallery functions
+        function loadGallery() {
+            const gallery = document.getElementById('gallery');
+            gallery.innerHTML = '';
+
+            if (artworks.length === 0) {
+                gallery.innerHTML = createEmptyState();
+                return;
+            }
+
+            artworks.forEach(artwork => {
+                const card = createArtworkCard(artwork);
+                gallery.appendChild(card);
+            });
+        }
+
+        function createEmptyState() {
+            return `
+                <div class="empty-state">
+                    <div class="empty-state-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <h3>Your gallery awaits</h3>
+                    <p>Share your artistic vision with the world. Upload your first masterpiece to begin showcasing your creative journey.</p>
+                    ${isLoggedIn ? '<button class="btn btn-primary" onclick="document.getElementById(\'imageFile\').click()">Upload First Artwork</button>' : '<button class="btn btn-primary" onclick="showLogin()">Admin Access Required</button>'}
+                </div>
+            `;
+        }
+
+        function createArtworkCard(artwork) {
+            const card = document.createElement('div');
+            card.className = 'artwork-card';
+            card.onclick = () => openArtworkModal(artwork.id);
+
+            const likesCount = likes[artwork.id] || 0;
+            const isLiked = localStorage.getItem(`liked_${artwork.id}`) === 'true';
+
+            card.innerHTML = `
+                <img src="${artwork.image}" alt="${artwork.title}" class="artwork-image">
+                <div class="artwork-info">
+                    <h3 class="artwork-title">${artwork.title}</h3>
+                    <p class="artwork-description">${artwork.description}</p>
+                    <div class="artwork-tags">
+                        ${artwork.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                    </div>
+                    <div class="artwork-actions">
+                        <button class="like-btn ${isLiked ? 'liked' : ''}" onclick="event.stopPropagation(); toggleLike(${artwork.id})">
+                            <svg class="like-icon" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span>${likesCount}</span> <span style="color: #6b7280;">likes</span>
+                        </button>
+                        <div class="admin-actions ${isLoggedIn ? '' : 'hidden'}">
+                            <button class="btn btn-secondary" onclick="event.stopPropagation(); editArtwork(${artwork.id})">Edit</button>
+                            <button class="btn btn-secondary" style="background: #dc2626; color: white; border-color: #dc2626;" onclick="event.stopPropagation(); deleteArtwork(${artwork.id})">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            return card;
+        }
+
+        // Modal functions
+        function openArtworkModal(artworkId) {
+            const artwork = artworks.find(a => a.id === artworkId);
+            if (!artwork) return;
+
+            currentArtworkId = artworkId;
+            const modal = document.getElementById('artworkModal');
+            
+            document.getElementById('modalImage').src = artwork.image;
+            document.getElementById('modalArtTitle').textContent = artwork.title;
+            document.getElementById('modalArtDescription').textContent = artwork.description;
+            
+            const tagsContainer = document.getElementById('modalArtTags');
+            tagsContainer.innerHTML = artwork.tags.map(tag => `<span class="tag">${tag}</span>`).join('');
+            
+            updateModalLikeButton(artworkId);
+            loadComments(artworkId);
+            
+            modal.style.display = 'flex';
+            
+            // Update admin actions visibility
+            document.getElementById('modalAdminActions').classList.toggle('hidden', !isLoggedIn);
+        }
+
+        function closeModal() {
+            document.getElementById('artworkModal').style.display = 'none';
+            document.getElementById('editForm').classList.add('hidden');
+            currentArtworkId = null;
+        }
+
+        // Like functionality
+        function toggleLike(artworkId) {
+            const likedKey = `liked_${artworkId}`;
+            const isCurrentlyLiked = localStorage.getItem(likedKey) === 'true';
+            
+            if (isCurrentlyLiked) {
+                likes[artworkId] = Math.max(0, (likes[artworkId] || 0) - 1);
+                localStorage.removeItem(likedKey);
+            } else {
+                likes[artworkId] = (likes[artworkId] || 0) + 1;
+                localStorage.setItem(likedKey, 'true');
+            }
+            
+            localStorage.setItem('likes', JSON.stringify(likes));
+            loadGallery();
+            
+            if (currentArtworkId === artworkId) {
+                updateModalLikeButton(artworkId);
+            }
+        }
+
+        function updateModalLikeButton(artworkId) {
+            const likesCount = likes[artworkId] || 0;
+            const isLiked = localStorage.getItem(`liked_${artworkId}`) === 'true';
+            
+            document.getElementById('modalLikeCount').textContent = likesCount;
+            document.getElementById('modalLikeBtn').classList.toggle('liked', isLiked);
+        }
+
+        // Edit functionality
+        function editArtwork(artworkId) {
+            const artwork = artworks.find(a => a.id === artworkId);
+            if (!artwork || !isLoggedIn) return;
+
+            document.getElementById('editTitle').value = artwork.title;
+            document.getElementById('editDescription').value = artwork.description;
+            document.getElementById('editTags').value = artwork.tags.join(', ');
+            document.getElementById('editForm').classList.remove('hidden');
+        }
+
+        function saveEdit(artworkId) {
+            const title = document.getElementById('editTitle').value.trim();
+            const description = document.getElementById('editDescription').value.trim();
+            const tags = document.getElementById('editTags').value.trim();
+
+            if (!title) {
+                alert('Title cannot be empty!');
+                return;
+            }
+
+            const artworkIndex = artworks.findIndex(a => a.id === artworkId);
+            if (artworkIndex === -1) return;
+
+            artworks[artworkIndex].title = title;
+            artworks[artworkIndex].description = description;
+            artworks[artworkIndex].tags = tags.split(',').map(tag => tag.trim()).filter(tag => tag);
+
+            localStorage.setItem('artworks', JSON.stringify(artworks));
+            
+            cancelEdit();
+            loadGallery();
+            
+            // Update modal content
+            document.getElementById('modalArtTitle').textContent = title;
+            document.getElementById('modalArtDescription').textContent = description;
+            const tagsContainer = document.getElementById('modalArtTags');
+            tagsContainer.innerHTML = artworks[artworkIndex].tags.map(tag => `<span class="tag">${tag}</span>`).join('');
+        }
+
+        function cancelEdit() {
+            document.getElementById('editForm').classList.add('hidden');
+        }
+
+        // Delete functionality
+        function deleteArtwork(artworkId) {
+            if (!isLoggedIn) return;
+            
+            if (confirm('Are you sure you want to delete this artwork? This action cannot be undone.')) {
+                artworks = artworks.filter(a => a.id !== artworkId);
+                localStorage.setItem('artworks', JSON.stringify(artworks));
+                
+                // Clean up associated data
+                delete likes[artworkId];
+                delete comments[artworkId];
+                localStorage.setItem('likes', JSON.stringify(likes));
+                localStorage.setItem('comments', JSON.stringify(comments));
+                localStorage.removeItem(`liked_${artworkId}`);
+                
+                loadGallery();
+                closeModal();
+            }
+        }
+
+        // Comments functionality
+        function addComment(artworkId) {
+            const name = document.getElementById('commenterName').value.trim() || 'Anonymous';
+            const text = document.getElementById('commentText').value.trim();
+
+            if (!text) {
+                alert('Please enter a comment.');
+                return;
+            }
+
+            if (!comments[artworkId]) {
+                comments[artworkId] = [];
+            }
+
+            const comment = {
+                id: Date.now(),
+                name: name,
+                text: text,
+                date: new Date().toISOString()
+            };
+
+            comments[artworkId].unshift(comment);
+            localStorage.setItem('comments', JSON.stringify(comments));
+
+            document.getElementById('commenterName').value = '';
+            document.getElementById('commentText').value = '';
+
+            loadComments(artworkId);
+        }
+
+        function loadComments(artworkId) {
+            const commentsList = document.getElementById('commentsList');
+            const artworkComments = comments[artworkId] || [];
+
+            if (artworkComments.length === 0) {
+                commentsList.innerHTML = '<p style="color: #9ca3af; text-align: center; padding: 32px; font-style: italic;">No comments yet. Share your thoughts about this artwork!</p>';
+                return;
+            }
+
+            commentsList.innerHTML = artworkComments.map(comment => `
+                <div class="comment">
+                    <div class="comment-author">${comment.name}</div>
+                    <div class="comment-text">${comment.text}</div>
+                    <div class="comment-date">${new Date(comment.date).toLocaleString()}</div>
+                </div>
+            `).join('');
+        }
+
+        // Search functionality
+        function setupSearchFunctionality() {
+            const searchInput = document.getElementById('searchInput');
+            searchInput.addEventListener('input', function(e) {
+                filterGallery(e.target.value.toLowerCase());
+            });
+        }
+
+        function filterGallery(searchTerm) {
+            const cards = document.querySelectorAll('.artwork-card');
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                const title = card.querySelector('.artwork-title')?.textContent.toLowerCase() || '';
+                const description = card.querySelector('.artwork-description')?.textContent.toLowerCase() || '';
+                const tags = Array.from(card.querySelectorAll('.tag')).map(tag => tag.textContent.toLowerCase()).join(' ');
+                
+                const isVisible = title.includes(searchTerm) || 
+                                description.includes(searchTerm) || 
+                                tags.includes(searchTerm);
+                
+                card.style.display = isVisible ? 'block' : 'none';
+                if (isVisible) visibleCount++;
+            });
+
+            // Show "no results" message if needed
+            const gallery = document.getElementById('gallery');
+            let noResults = document.getElementById('noSearchResults');
+            
+            if (visibleCount === 0 && searchTerm && artworks.length > 0) {
+                if (!noResults) {
+                    noResults = document.createElement('div');
+                    noResults.id = 'noSearchResults';
+                    noResults.className = 'empty-state';
+                    noResults.style.gridColumn = '1 / -1';
+                    gallery.appendChild(noResults);
+                }
+                noResults.innerHTML = `
+                    <div class="empty-state-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </div>
+                    <h3>No artworks found</h3>
+                    <p>Try adjusting your search terms or browse all artworks.</p>
+                    <button class="btn btn-secondary" onclick="document.getElementById('searchInput').value = ''; filterGallery('');">Clear Search</button>
+                `;
+            } else if (noResults) {
+                noResults.remove();
+            }
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('artworkModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Handle file input change
+        document.getElementById('imageFile').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            const label = document.querySelector('.file-input-button');
+            
+            if (file && validateImage(file)) {
+                label.innerHTML = `
+                    <svg class="file-input-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: #10b981;">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    <div class="file-input-text" style="color: #10b981;">Selected: ${file.name}</div>
+                    <div class="file-input-subtext">Click to change file</div>
+                `;
+            } else if (!file) {
+                resetFileInput();
+            }
+        });
+
+        // Image validation
+        function validateImage(file) {
+            const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+            const maxSize = 5 * 1024 * 1024; // 5MB
+
+            if (!validTypes.includes(file.type)) {
+                alert('Please select a valid image file (JPEG, PNG, GIF, WebP).');
+                resetFileInput();
+                return false;
+            }
+
+            if (file.size > maxSize) {
+                alert(`File size too large. Please select an image smaller than 5MB.`);
+                resetFileInput();
+                return false;
+            }
+
+            return true;
+        }
+
+        // Handle Enter key for login
+        document.getElementById('password').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                login();
+            }
+        });
+
+        document.getElementById('username').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                login();
+            }
+        });
+
+        // Handle Enter key for comments
+        document.getElementById('commentText').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && e.ctrlKey) {
+                addComment(currentArtworkId);
+            }
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            // ESC to close modal
+            if (e.key === 'Escape') {
+                closeModal();
+                hideLogin();
+            }
+            
+            // Ctrl+Shift+A for admin login
+            if (e.ctrlKey && e.shiftKey && e.key === 'A' && !isLoggedIn) {
+                showLogin();
+            }
+        });
+
+        // Touch support for mobile
+        let touchStartY = 0;
+        document.getElementById('artworkModal').addEventListener('touchstart', function(e) {
+            touchStartY = e.touches[0].clientY;
+        });
+
+        document.getElementById('artworkModal').addEventListener('touchend', function(e) {
+            const touchEndY = e.changedTouches[0].clientY;
+            const diff = touchStartY - touchEndY;
+            
+            if (diff < -100) {
+                closeModal();
+            }
+        });
+
+        // Animation for new artworks
+        function animateNewArtwork() {
+            const newCard = document.querySelector('.artwork-card:first-child');
+            if (newCard) {
+                newCard.style.transform = 'scale(0.8)';
+                newCard.style.opacity = '0';
+                setTimeout(() => {
+                    newCard.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+                    newCard.style.transform = 'scale(1)';
+                    newCard.style.opacity = '1';
+                }, 100);
+            }
+        }
+
+        // Update upload to include animation
+        const originalLoad = loadGallery;
+        loadGallery = function() {
+            const wasEmpty = artworks.length === 0;
+            originalLoad();
+            if (!wasEmpty && artworks.length > 0) {
+                setTimeout(animateNewArtwork, 100);
+            }
+        };
+
+        console.log('🎨 Artisan Gallery initialized successfully!');
+        console.log('Admin credentials: username = "admin", password = "Aa123456"');
+        console.log('Press Ctrl+Shift+A for quick admin access');
+    </script>
+</body>
+</html>
+

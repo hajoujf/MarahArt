@@ -1105,7 +1105,9 @@
     <script>
         const SUPABASE_URL = "https://njpbnagjijmgvddgztzt.supabase.co";
         const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5qcGJuYWdqaWptZ3ZkZGd6dHp0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIyNzk1NzYsImV4cCI6MjA4Nzg1NTU3Nn0.cDVgF3ADTJMaI80ZRxQJTnma7p-1zEJsiGFPfdZdwtQ";
-
+        let artworks = [];
+        let likes = {};
+        let comments = {};
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         // Global variables
         let isLoggedIn = false;
@@ -1331,6 +1333,9 @@ async function uploadArtwork() {
     loadGallery();
 }
 
+            reader.readAsDataURL(file);
+        }
+
         function resetFileInput() {
             const label = document.querySelector('.file-input-button');
             label.innerHTML = `
@@ -1343,7 +1348,7 @@ async function uploadArtwork() {
         }
 
         // Gallery functions
-        async function loadGallery() {
+       async function loadGallery() {
     const gallery = document.getElementById('gallery');
     gallery.innerHTML = "Loading...";
 
@@ -1358,10 +1363,12 @@ async function uploadArtwork() {
         return;
     }
 
+    artworks = data; // 🔥 THIS WAS MISSING
+
     gallery.innerHTML = "";
 
     if (data.length === 0) {
-        gallery.innerHTML = "<p>No artworks yet.</p>";
+        gallery.innerHTML = createEmptyState();
         return;
     }
 
@@ -1370,7 +1377,6 @@ async function uploadArtwork() {
         gallery.appendChild(card);
     });
 }
-
         function createEmptyState() {
             return `
                 <div class="empty-state">

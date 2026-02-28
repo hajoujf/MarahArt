@@ -1,1339 +1,1572 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Artisan Gallery - Contemporary Art Showcase</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
 
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #fafafa;
-            min-height: 100vh;
-            color: #1a1a1a;
-            line-height: 1.6;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
+      body {
+        font-family:
+          "Inter",
+          -apple-system,
+          BlinkMacSystemFont,
+          sans-serif;
+        background: #fafafa;
+        min-height: 100vh;
+        color: #1a1a1a;
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 40px 24px;
+      }
+
+      /* Profile Section */
+      .profile-section {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 60px 0;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .profile-section::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.3);
+        z-index: 1;
+      }
+
+      .profile-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0 24px;
+        position: relative;
+        z-index: 2;
+      }
+
+      .profile-image-wrapper {
+        position: relative;
+        display: inline-block;
+        margin-bottom: 24px;
+      }
+
+      .profile-image {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .profile-image:hover {
+        transform: scale(1.05);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+      }
+
+      .profile-image-placeholder {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.2);
+        border: 2px dashed rgba(255, 255, 255, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 14px;
+        text-align: center;
+        padding: 20px;
+      }
+
+      .profile-image-placeholder:hover {
+        background: rgba(255, 255, 255, 0.3);
+        border-color: rgba(255, 255, 255, 0.8);
+      }
+
+      .profile-name {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: white;
+        margin-bottom: 16px;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .profile-description {
+        font-size: 1.125rem;
+        color: rgba(255, 255, 255, 0.9);
+        line-height: 1.6;
+        max-width: 600px;
+        margin: 0 auto;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+      }
+
+      .profile-edit-section {
+        background: white;
+        padding: 32px;
+        border-radius: 12px;
+        border: 1px solid #e5e5e5;
+        margin: 24px auto 48px;
+        max-width: 600px;
+        text-align: left;
+      }
+
+      .profile-edit-section h3 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 24px;
+        color: #1a1a1a;
+        text-align: center;
+      }
+
+      .profile-form-group {
+        margin-bottom: 20px;
+      }
+
+      .profile-form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: #1a1a1a;
+        font-size: 14px;
+      }
+
+      .profile-form-group input,
+      .profile-form-group textarea {
+        width: 100%;
+        padding: 12px 16px;
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        font-size: 14px;
+        transition: border-color 0.2s ease;
+        font-family: inherit;
+      }
+
+      .profile-form-group input:focus,
+      .profile-form-group textarea:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      }
+
+      .profile-image-input-wrapper {
+        position: relative;
+        margin-bottom: 20px;
+      }
+
+      .profile-image-input {
+        position: absolute;
+        left: -9999px;
+      }
+
+      .profile-image-button {
+        width: 100%;
+        padding: 24px;
+        border: 2px dashed #d1d5db;
+        border-radius: 8px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        background: #f9fafb;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .profile-image-button:hover {
+        background: #f3f4f6;
+        border-color: #9ca3af;
+      }
+
+      /* Header */
+      .header {
+        background: #ffffff;
+        padding: 32px 0;
+        border-bottom: 1px solid #e5e5e5;
+        margin-bottom: 48px;
+      }
+
+      .header-content {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+
+      .logo {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: #1a1a1a;
+        letter-spacing: -0.025em;
+      }
+
+      .nav-buttons {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+      }
+
+      .btn {
+        padding: 12px 24px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-family: inherit;
+      }
+
+      .btn-primary {
+        background: #1a1a1a;
+        color: white;
+      }
+
+      .btn-primary:hover {
+        background: #2a2a2a;
+        transform: translateY(-1px);
+      }
+
+      .btn-secondary {
+        background: #f5f5f5;
+        color: #1a1a1a;
+        border: 1px solid #e5e5e5;
+      }
+
+      .btn-secondary:hover {
+        background: #eeeeee;
+        transform: translateY(-1px);
+      }
+
+      .welcome-text {
+        font-size: 14px;
+        color: #666;
+        font-weight: 500;
+      }
+
+      /* Login Form */
+      .login-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: 2000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 24px;
+      }
+
+      .login-form {
+        background: white;
+        padding: 48px;
+        border-radius: 12px;
+        border: 1px solid #e5e5e5;
+        max-width: 400px;
+        width: 100%;
+        position: relative;
+        transform: scale(0.9);
+        opacity: 0;
+        transition: all 0.3s ease;
+      }
+
+      .login-form.show {
+        transform: scale(1);
+        opacity: 1;
+      }
+
+      .login-form h2 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        text-align: center;
+        margin-bottom: 32px;
+        color: #1a1a1a;
+      }
+
+      .form-group {
+        margin-bottom: 24px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: #1a1a1a;
+        font-size: 14px;
+      }
+
+      .form-group input {
+        width: 100%;
+        padding: 14px 16px;
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        font-size: 16px;
+        transition: border-color 0.2s ease;
+        font-family: inherit;
+      }
+
+      .form-group input:focus {
+        outline: none;
+        border-color: #1a1a1a;
+        box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.1);
+      }
+
+      /* Gallery Grid */
+      .gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+        gap: 32px;
+        margin-top: 48px;
+      }
+
+      .artwork-card {
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid #e5e5e5;
+        transition: all 0.3s ease;
+        cursor: pointer;
+      }
+
+      .artwork-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        border-color: #d1d5db;
+      }
+
+      .artwork-image {
+        width: 100%;
+        height: 280px;
+        object-fit: cover;
+        background: #f8f9fa;
+      }
+
+      .artwork-info {
+        padding: 24px;
+      }
+
+      .artwork-title {
+        font-size: 1.125rem;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: #1a1a1a;
+      }
+
+      .artwork-description {
+        color: #6b7280;
+        margin-bottom: 16px;
+        line-height: 1.5;
+        font-size: 14px;
+      }
+
+      .artwork-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 20px;
+      }
+
+      .tag {
+        background: #f3f4f6;
+        color: #6b7280;
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: 500;
+      }
+
+      .artwork-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .like-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #6b7280;
+        transition: color 0.2s ease;
+        font-size: 14px;
+        font-weight: 500;
+        padding: 8px 12px;
+        border-radius: 6px;
+      }
+
+      .like-btn:hover {
+        color: #dc2626;
+        background: #fef2f2;
+      }
+
+      .like-btn.liked {
+        color: #dc2626;
+        background: #fef2f2;
+      }
+
+      .like-icon {
+        width: 16px;
+        height: 16px;
+      }
+
+      .admin-actions {
+        display: flex;
+        gap: 8px;
+      }
+
+      .admin-actions .btn {
+        padding: 8px 16px;
+        font-size: 12px;
+      }
+
+      /* Enhanced Empty State with Template Preview */
+      .empty-state {
+        grid-column: 1 / -1;
+        text-align: center;
+        padding: 60px 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .empty-state-icon {
+        width: 120px;
+        height: 120px;
+        margin: 0 auto 32px;
+        background: #f3f4f6;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .empty-state-icon svg {
+        width: 48px;
+        height: 48px;
+        color: #9ca3af;
+      }
+
+      .empty-state h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #1a1a1a;
+        margin-bottom: 12px;
+      }
+
+      .empty-state p {
+        color: #6b7280;
+        font-size: 16px;
+        margin-bottom: 32px;
+        line-height: 1.6;
+      }
+
+      .template-preview {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 24px;
+        margin: 48px 0;
+        max-width: 1000px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .template-card {
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid #e5e5e5;
+        opacity: 0.7;
+        position: relative;
+      }
+
+      .template-card::before {
+        content: "PREVIEW";
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        background: #667eea;
+        color: white;
+        padding: 4px 12px;
+        border-radius: 4px;
+        font-size: 11px;
+        font-weight: 600;
+        z-index: 10;
+      }
+
+      .template-image {
+        width: 100%;
+        height: 200px;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #9ca3af;
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      .template-info {
+        padding: 20px;
+      }
+
+      .template-title {
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: #9ca3af;
+      }
+
+      .template-description {
+        color: #c3cfe2;
+        margin-bottom: 16px;
+        line-height: 1.5;
+        font-size: 13px;
+      }
+
+      .template-tags {
+        display: flex;
+        gap: 6px;
+        margin-bottom: 16px;
+      }
+
+      .template-tag {
+        background: #f8f9fa;
+        color: #c3cfe2;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 11px;
+      }
+
+      .empty-state .btn {
+        padding: 14px 28px;
+        font-size: 16px;
+      }
+
+      /* Rest of the existing styles... */
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+        padding: 24px;
+      }
+
+      .modal-content {
+        background: white;
+        border-radius: 12px;
+        max-width: 900px;
+        width: 100%;
+        max-height: 90vh;
+        overflow-y: auto;
+        position: relative;
+      }
+
+      .modal-header {
+        padding: 24px 32px;
+        border-bottom: 1px solid #e5e5e5;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .modal-header h3 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #1a1a1a;
+      }
+
+      .modal-body {
+        padding: 32px;
+      }
+
+      .close-btn {
+        background: none;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+        color: #6b7280;
+        padding: 4px;
+        border-radius: 4px;
+        transition: all 0.2s ease;
+      }
+
+      .close-btn:hover {
+        color: #1a1a1a;
+        background: #f3f4f6;
+      }
+
+      .detail-image {
+        width: 100%;
+        max-height: 500px;
+        object-fit: contain;
+        border-radius: 8px;
+        margin-bottom: 32px;
+        background: #f8f9fa;
+      }
+
+      .upload-form {
+        background: white;
+        padding: 48px;
+        border-radius: 12px;
+        border: 1px solid #e5e5e5;
+        margin-bottom: 48px;
+      }
+
+      .upload-form h3 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 32px;
+        color: #1a1a1a;
+      }
+
+      .file-input-wrapper {
+        position: relative;
+        overflow: hidden;
+        display: inline-block;
+        width: 100%;
+        margin-bottom: 24px;
+      }
+
+      .file-input {
+        position: absolute;
+        left: -9999px;
+      }
+
+      .file-input-button {
+        width: 100%;
+        padding: 48px 24px;
+        border: 2px dashed #d1d5db;
+        border-radius: 8px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        background: #f9fafb;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .file-input-button:hover {
+        background: #f3f4f6;
+        border-color: #9ca3af;
+      }
+
+      .file-input-icon {
+        width: 48px;
+        height: 48px;
+        color: #6b7280;
+      }
+
+      .file-input-text {
+        font-size: 16px;
+        font-weight: 500;
+        color: #1a1a1a;
+      }
+
+      .file-input-subtext {
+        font-size: 14px;
+        color: #6b7280;
+      }
+
+      .comments-section {
+        margin-top: 48px;
+        padding-top: 32px;
+        border-top: 1px solid #e5e5e5;
+      }
+
+      .comments-section h4 {
+        font-size: 1.125rem;
+        font-weight: 600;
+        margin-bottom: 24px;
+        color: #1a1a1a;
+      }
+
+      .comment-form {
+        margin-bottom: 32px;
+        padding: 24px;
+        background: #f9fafb;
+        border-radius: 8px;
+        border: 1px solid #e5e5e5;
+      }
+
+      .comment-form input,
+      .comment-form textarea {
+        width: 100%;
+        padding: 12px 16px;
+        margin-bottom: 16px;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        resize: vertical;
+        font-family: inherit;
+        font-size: 14px;
+      }
+
+      .comment-form input:focus,
+      .comment-form textarea:focus {
+        outline: none;
+        border-color: #1a1a1a;
+        box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.1);
+      }
+
+      .comment {
+        padding: 20px;
+        margin-bottom: 16px;
+        background: #f9fafb;
+        border-radius: 8px;
+        border-left: 3px solid #1a1a1a;
+      }
+
+      .comment-author {
+        font-weight: 600;
+        color: #1a1a1a;
+        margin-bottom: 8px;
+        font-size: 14px;
+      }
+
+      .comment-text {
+        color: #4b5563;
+        line-height: 1.5;
+        margin-bottom: 8px;
+        font-size: 14px;
+      }
+
+      .comment-date {
+        font-size: 12px;
+        color: #9ca3af;
+      }
+
+      .edit-form {
+        background: #f9fafb;
+        padding: 24px;
+        border-radius: 8px;
+        margin-top: 24px;
+        border: 1px solid #e5e5e5;
+      }
+
+      .edit-form h4 {
+        font-size: 1.125rem;
+        font-weight: 600;
+        margin-bottom: 20px;
+        color: #1a1a1a;
+      }
+
+      .edit-form input,
+      .edit-form textarea {
+        width: 100%;
+        margin-bottom: 16px;
+        padding: 12px 16px;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        font-family: inherit;
+      }
+
+      .edit-form input:focus,
+      .edit-form textarea:focus {
+        outline: none;
+        border-color: #1a1a1a;
+        box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.1);
+      }
+
+      .edit-form-actions {
+        display: flex;
+        gap: 12px;
+        margin-top: 20px;
+      }
+
+      .search-container {
+        background: white;
+        padding: 24px;
+        border-radius: 12px;
+        margin-bottom: 32px;
+        border: 1px solid #e5e5e5;
+      }
+
+      .search-input {
+        width: 100%;
+        padding: 16px 20px;
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        font-size: 16px;
+        font-family: inherit;
+        transition: border-color 0.2s ease;
+      }
+
+      .search-input:focus {
+        outline: none;
+        border-color: #1a1a1a;
+        box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.1);
+      }
+
+      @media (max-width: 768px) {
         .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 40px 24px;
-        }
-
-        /* Profile Section */
-        .profile-section {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 60px 0;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .profile-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.3);
-            z-index: 1;
-        }
-
-        .profile-content {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 0 24px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .profile-image-wrapper {
-            position: relative;
-            display: inline-block;
-            margin-bottom: 24px;
-        }
-
-        .profile-image {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid rgba(255,255,255,0.3);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .profile-image:hover {
-            transform: scale(1.05);
-            box-shadow: 0 12px 40px rgba(0,0,0,0.4);
-        }
-
-        .profile-image-placeholder {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.2);
-            border: 2px dashed rgba(255,255,255,0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            color: rgba(255,255,255,0.8);
-            font-size: 14px;
-            text-align: center;
-            padding: 20px;
-        }
-
-        .profile-image-placeholder:hover {
-            background: rgba(255,255,255,0.3);
-            border-color: rgba(255,255,255,0.8);
-        }
-
-        .profile-name {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: white;
-            margin-bottom: 16px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .profile-description {
-            font-size: 1.125rem;
-            color: rgba(255,255,255,0.9);
-            line-height: 1.6;
-            max-width: 600px;
-            margin: 0 auto;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-        }
-
-        .profile-edit-section {
-            background: white;
-            padding: 32px;
-            border-radius: 12px;
-            border: 1px solid #e5e5e5;
-            margin: 24px auto 48px;
-            max-width: 600px;
-            text-align: left;
-        }
-
-        .profile-edit-section h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 24px;
-            color: #1a1a1a;
-            text-align: center;
-        }
-
-        .profile-form-group {
-            margin-bottom: 20px;
-        }
-
-        .profile-form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: #1a1a1a;
-            font-size: 14px;
-        }
-
-        .profile-form-group input, .profile-form-group textarea {
-            width: 100%;
-            padding: 12px 16px;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-            font-size: 14px;
-            transition: border-color 0.2s ease;
-            font-family: inherit;
-        }
-
-        .profile-form-group input:focus, .profile-form-group textarea:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        .profile-image-input-wrapper {
-            position: relative;
-            margin-bottom: 20px;
-        }
-
-        .profile-image-input {
-            position: absolute;
-            left: -9999px;
-        }
-
-        .profile-image-button {
-            width: 100%;
-            padding: 24px;
-            border: 2px dashed #d1d5db;
-            border-radius: 8px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            background: #f9fafb;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .profile-image-button:hover {
-            background: #f3f4f6;
-            border-color: #9ca3af;
-        }
-
-        /* Header */
-        .header {
-            background: #ffffff;
-            padding: 32px 0;
-            border-bottom: 1px solid #e5e5e5;
-            margin-bottom: 48px;
+          padding: 20px 16px;
         }
 
         .header-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
+          flex-direction: column;
+          text-align: center;
+          gap: 20px;
+          padding: 0 16px;
         }
 
-        .logo {
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: #1a1a1a;
-            letter-spacing: -0.025em;
-        }
-
-        .nav-buttons {
-            display: flex;
-            gap: 16px;
-            align-items: center;
-        }
-
-        .btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-            transition: all 0.2s ease;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-family: inherit;
-        }
-
-        .btn-primary {
-            background: #1a1a1a;
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: #2a2a2a;
-            transform: translateY(-1px);
-        }
-
-        .btn-secondary {
-            background: #f5f5f5;
-            color: #1a1a1a;
-            border: 1px solid #e5e5e5;
-        }
-
-        .btn-secondary:hover {
-            background: #eeeeee;
-            transform: translateY(-1px);
-        }
-
-        .welcome-text {
-            font-size: 14px;
-            color: #666;
-            font-weight: 500;
-        }
-
-        /* Login Form */
-        .login-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-            z-index: 2000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 24px;
-        }
-
-        .login-form {
-            background: white;
-            padding: 48px;
-            border-radius: 12px;
-            border: 1px solid #e5e5e5;
-            max-width: 400px;
-            width: 100%;
-            position: relative;
-            transform: scale(0.9);
-            opacity: 0;
-            transition: all 0.3s ease;
-        }
-
-        .login-form.show {
-            transform: scale(1);
-            opacity: 1;
-        }
-
-        .login-form h2 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            text-align: center;
-            margin-bottom: 32px;
-            color: #1a1a1a;
-        }
-
-        .form-group {
-            margin-bottom: 24px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: #1a1a1a;
-            font-size: 14px;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 14px 16px;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: border-color 0.2s ease;
-            font-family: inherit;
-        }
-
-        .form-group input:focus {
-            outline: none;
-            border-color: #1a1a1a;
-            box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.1);
-        }
-
-        /* Gallery Grid */
         .gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-            gap: 32px;
-            margin-top: 48px;
-        }
-
-        .artwork-card {
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            border: 1px solid #e5e5e5;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .artwork-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            border-color: #d1d5db;
-        }
-
-        .artwork-image {
-            width: 100%;
-            height: 280px;
-            object-fit: cover;
-            background: #f8f9fa;
-        }
-
-        .artwork-info {
-            padding: 24px;
-        }
-
-        .artwork-title {
-            font-size: 1.125rem;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: #1a1a1a;
-        }
-
-        .artwork-description {
-            color: #6b7280;
-            margin-bottom: 16px;
-            line-height: 1.5;
-            font-size: 14px;
-        }
-
-        .artwork-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 20px;
-        }
-
-        .tag {
-            background: #f3f4f6;
-            color: #6b7280;
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 500;
-        }
-
-        .artwork-actions {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .like-btn {
-            background: none;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #6b7280;
-            transition: color 0.2s ease;
-            font-size: 14px;
-            font-weight: 500;
-            padding: 8px 12px;
-            border-radius: 6px;
-        }
-
-        .like-btn:hover {
-            color: #dc2626;
-            background: #fef2f2;
-        }
-
-        .like-btn.liked {
-            color: #dc2626;
-            background: #fef2f2;
-        }
-
-        .like-icon {
-            width: 16px;
-            height: 16px;
-        }
-
-        .admin-actions {
-            display: flex;
-            gap: 8px;
-        }
-
-        .admin-actions .btn {
-            padding: 8px 16px;
-            font-size: 12px;
-        }
-
-        /* Enhanced Empty State with Template Preview */
-        .empty-state {
-            grid-column: 1 / -1;
-            text-align: center;
-            padding: 60px 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .empty-state-icon {
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 32px;
-            background: #f3f4f6;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .empty-state-icon svg {
-            width: 48px;
-            height: 48px;
-            color: #9ca3af;
-        }
-
-        .empty-state h3 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #1a1a1a;
-            margin-bottom: 12px;
-        }
-
-        .empty-state p {
-            color: #6b7280;
-            font-size: 16px;
-            margin-bottom: 32px;
-            line-height: 1.6;
-        }
-
-        .template-preview {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 24px;
-            margin: 48px 0;
-            max-width: 1000px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .template-card {
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            border: 1px solid #e5e5e5;
-            opacity: 0.7;
-            position: relative;
-        }
-
-        .template-card::before {
-            content: 'PREVIEW';
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            background: #667eea;
-            color: white;
-            padding: 4px 12px;
-            border-radius: 4px;
-            font-size: 11px;
-            font-weight: 600;
-            z-index: 10;
-        }
-
-        .template-image {
-            width: 100%;
-            height: 200px;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #9ca3af;
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-        .template-info {
-            padding: 20px;
-        }
-
-        .template-title {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: #9ca3af;
-        }
-
-        .template-description {
-            color: #c3cfe2;
-            margin-bottom: 16px;
-            line-height: 1.5;
-            font-size: 13px;
-        }
-
-        .template-tags {
-            display: flex;
-            gap: 6px;
-            margin-bottom: 16px;
-        }
-
-        .template-tag {
-            background: #f8f9fa;
-            color: #c3cfe2;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 11px;
-        }
-
-        .empty-state .btn {
-            padding: 14px 28px;
-            font-size: 16px;
-        }
-
-        /* Rest of the existing styles... */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            padding: 24px;
+          grid-template-columns: 1fr;
+          gap: 20px;
         }
 
         .modal-content {
-            background: white;
-            border-radius: 12px;
-            max-width: 900px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            position: relative;
+          margin: 10px;
+          max-height: 95vh;
         }
 
-        .modal-header {
-            padding: 24px 32px;
-            border-bottom: 1px solid #e5e5e5;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .modal-body,
+        .upload-form,
+        .login-form {
+          padding: 24px;
         }
 
-        .modal-header h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: #1a1a1a;
+        .nav-buttons {
+          flex-wrap: wrap;
+          justify-content: center;
         }
 
-        .modal-body {
-            padding: 32px;
+        .profile-section {
+          padding: 40px 0;
         }
 
-        .close-btn {
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: #6b7280;
-            padding: 4px;
-            border-radius: 4px;
-            transition: all 0.2s ease;
+        .profile-name {
+          font-size: 2rem;
         }
 
-        .close-btn:hover {
-            color: #1a1a1a;
-            background: #f3f4f6;
+        .profile-description {
+          font-size: 1rem;
         }
 
-        .detail-image {
-            width: 100%;
-            max-height: 500px;
-            object-fit: contain;
-            border-radius: 8px;
-            margin-bottom: 32px;
-            background: #f8f9fa;
+        .template-preview {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .logo {
+          font-size: 1.5rem;
         }
 
-        .upload-form {
-            background: white;
-            padding: 48px;
-            border-radius: 12px;
-            border: 1px solid #e5e5e5;
-            margin-bottom: 48px;
+        .btn {
+          padding: 10px 20px;
+          font-size: 13px;
         }
 
-        .upload-form h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 32px;
-            color: #1a1a1a;
+        .artwork-info {
+          padding: 20px;
         }
 
-        .file-input-wrapper {
-            position: relative;
-            overflow: hidden;
-            display: inline-block;
-            width: 100%;
-            margin-bottom: 24px;
+        .empty-state {
+          padding: 40px 16px;
         }
 
-        .file-input {
-            position: absolute;
-            left: -9999px;
+        .empty-state-icon {
+          width: 100px;
+          height: 100px;
+          margin-bottom: 24px;
         }
 
-        .file-input-button {
-            width: 100%;
-            padding: 48px 24px;
-            border: 2px dashed #d1d5db;
-            border-radius: 8px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            background: #f9fafb;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 16px;
+        .profile-image,
+        .profile-image-placeholder {
+          width: 120px;
+          height: 120px;
         }
 
-        .file-input-button:hover {
-            background: #f3f4f6;
-            border-color: #9ca3af;
+        .profile-name {
+          font-size: 1.8rem;
         }
+      }
 
-        .file-input-icon {
-            width: 48px;
-            height: 48px;
-            color: #6b7280;
-        }
+      .hidden {
+        display: none !important;
+      }
 
-        .file-input-text {
-            font-size: 16px;
-            font-weight: 500;
-            color: #1a1a1a;
-        }
+      .loading {
+        opacity: 0.6;
+        pointer-events: none;
+      }
 
-        .file-input-subtext {
-            font-size: 14px;
-            color: #6b7280;
-        }
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
 
-        .comments-section {
-            margin-top: 48px;
-            padding-top: 32px;
-            border-top: 1px solid #e5e5e5;
-        }
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
 
-        .comments-section h4 {
-            font-size: 1.125rem;
-            font-weight: 600;
-            margin-bottom: 24px;
-            color: #1a1a1a;
-        }
+      ::-webkit-scrollbar-thumb {
+        background: #c1c1c1;
+        border-radius: 4px;
+      }
 
-        .comment-form {
-            margin-bottom: 32px;
-            padding: 24px;
-            background: #f9fafb;
-            border-radius: 8px;
-            border: 1px solid #e5e5e5;
-        }
-
-        .comment-form input, .comment-form textarea {
-            width: 100%;
-            padding: 12px 16px;
-            margin-bottom: 16px;
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
-            resize: vertical;
-            font-family: inherit;
-            font-size: 14px;
-        }
-
-        .comment-form input:focus, .comment-form textarea:focus {
-            outline: none;
-            border-color: #1a1a1a;
-            box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.1);
-        }
-
-        .comment {
-            padding: 20px;
-            margin-bottom: 16px;
-            background: #f9fafb;
-            border-radius: 8px;
-            border-left: 3px solid #1a1a1a;
-        }
-
-        .comment-author {
-            font-weight: 600;
-            color: #1a1a1a;
-            margin-bottom: 8px;
-            font-size: 14px;
-        }
-
-        .comment-text {
-            color: #4b5563;
-            line-height: 1.5;
-            margin-bottom: 8px;
-            font-size: 14px;
-        }
-
-        .comment-date {
-            font-size: 12px;
-            color: #9ca3af;
-        }
-
-        .edit-form {
-            background: #f9fafb;
-            padding: 24px;
-            border-radius: 8px;
-            margin-top: 24px;
-            border: 1px solid #e5e5e5;
-        }
-
-        .edit-form h4 {
-            font-size: 1.125rem;
-            font-weight: 600;
-            margin-bottom: 20px;
-            color: #1a1a1a;
-        }
-
-        .edit-form input, .edit-form textarea {
-            width: 100%;
-            margin-bottom: 16px;
-            padding: 12px 16px;
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
-            font-family: inherit;
-        }
-
-        .edit-form input:focus, .edit-form textarea:focus {
-            outline: none;
-            border-color: #1a1a1a;
-            box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.1);
-        }
-
-        .edit-form-actions {
-            display: flex;
-            gap: 12px;
-            margin-top: 20px;
-        }
-
-        .search-container {
-            background: white;
-            padding: 24px;
-            border-radius: 12px;
-            margin-bottom: 32px;
-            border: 1px solid #e5e5e5;
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 16px 20px;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-            font-size: 16px;
-            font-family: inherit;
-            transition: border-color 0.2s ease;
-        }
-
-        .search-input:focus {
-            outline: none;
-            border-color: #1a1a1a;
-            box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.1);
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 20px 16px;
-            }
-            
-            .header-content {
-                flex-direction: column;
-                text-align: center;
-                gap: 20px;
-                padding: 0 16px;
-            }
-            
-            .gallery {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-            
-            .modal-content {
-                margin: 10px;
-                max-height: 95vh;
-            }
-            
-            .modal-body, .upload-form, .login-form {
-                padding: 24px;
-            }
-            
-            .nav-buttons {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-
-            .profile-section {
-                padding: 40px 0;
-            }
-
-            .profile-name {
-                font-size: 2rem;
-            }
-
-            .profile-description {
-                font-size: 1rem;
-            }
-
-            .template-preview {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .logo {
-                font-size: 1.5rem;
-            }
-            
-            .btn {
-                padding: 10px 20px;
-                font-size: 13px;
-            }
-            
-            .artwork-info {
-                padding: 20px;
-            }
-
-            .empty-state {
-                padding: 40px 16px;
-            }
-
-            .empty-state-icon {
-                width: 100px;
-                height: 100px;
-                margin-bottom: 24px;
-            }
-
-            .profile-image, .profile-image-placeholder {
-                width: 120px;
-                height: 120px;
-            }
-
-            .profile-name {
-                font-size: 1.8rem;
-            }
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
-        .loading {
-            opacity: 0.6;
-            pointer-events: none;
-        }
-
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #c1c1c1;
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: #a8a8a8;
-        }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #a8a8a8;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <!-- Profile Section -->
     <div class="profile-section">
-        <div class="profile-content">
-            <div class="profile-image-wrapper">
-                <div id="profileImageDisplay">
-                    <div class="profile-image-placeholder">
-                        Click to add your photo
-                    </div>
-                </div>
-            </div>
-            <h1 class="profile-name" id="profileName">Marah Kayal</h1>
-            <p class="profile-description" id="profileDescription">Passionate artist exploring the intersection of contemporary art and digital expression. Welcome to my creative journey where each piece tells a unique story.</p>
+      <div class="profile-content">
+        <div class="profile-image-wrapper">
+          <div id="profileImageDisplay">
+            <div class="profile-image-placeholder">Click to add your photo</div>
+          </div>
         </div>
+        <h1 class="profile-name" id="profileName">Marah Kayal</h1>
+        <p class="profile-description" id="profileDescription">
+          Passionate artist exploring the intersection of contemporary art and
+          digital expression. Welcome to my creative journey where each piece
+          tells a unique story.
+        </p>
+      </div>
     </div>
 
     <!-- Profile Edit Section (Admin Only) -->
     <div id="profileEditSection" class="profile-edit-section hidden">
-        <h3>Edit Profile</h3>
-        <div class="profile-image-input-wrapper">
-            <input type="file" id="profileImageInput" class="profile-image-input" accept="image/*">
-            <label for="profileImageInput" class="profile-image-button">
-                <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                </svg>
-                <span>Choose Profile Photo</span>
-            </label>
-        </div>
-        <div class="profile-form-group">
-            <label for="profileNameInput">Name</label>
-            <input type="text" id="profileNameInput" value="Marah Kayal" placeholder="Your name">
-        </div>
-        <div class="profile-form-group">
-            <label for="profileDescriptionInput">About You</label>
-            <textarea id="profileDescriptionInput" rows="4" placeholder="Tell visitors about yourself, your art, and your inspiration...">Passionate artist exploring the intersection of contemporary art and digital expression. Welcome to my creative journey where each piece tells a unique story.</textarea>
-        </div>
-        <button onclick="saveProfile()" class="btn btn-primary">Save Profile</button>
+      <h3>Edit Profile</h3>
+      <div class="profile-image-input-wrapper">
+        <input
+          type="file"
+          id="profileImageInput"
+          class="profile-image-input"
+          accept="image/*"
+        />
+        <label for="profileImageInput" class="profile-image-button">
+          <svg
+            width="24"
+            height="24"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+            ></path>
+          </svg>
+          <span>Choose Profile Photo</span>
+        </label>
+      </div>
+      <div class="profile-form-group">
+        <label for="profileNameInput">Name</label>
+        <input
+          type="text"
+          id="profileNameInput"
+          value="Marah Kayal"
+          placeholder="Your name"
+        />
+      </div>
+      <div class="profile-form-group">
+        <label for="profileDescriptionInput">About You</label>
+        <textarea
+          id="profileDescriptionInput"
+          rows="4"
+          placeholder="Tell visitors about yourself, your art, and your inspiration..."
+        >
+Passionate artist exploring the intersection of contemporary art and digital expression. Welcome to my creative journey where each piece tells a unique story.</textarea
+        >
+      </div>
+      <button onclick="saveProfile()" class="btn btn-primary">
+        Save Profile
+      </button>
     </div>
 
     <div class="header">
-        <div class="header-content">
-            <div class="logo">Artisan Gallery</div>
-            <div class="nav-buttons">
-                <span id="welcomeText" class="welcome-text hidden">Welcome back, Admin</span>
-                <button id="loginBtn" class="btn btn-primary">Admin Access</button>
-                <button id="logoutBtn" class="btn btn-secondary hidden">Sign Out</button>
-            </div>
+      <div class="header-content">
+        <div class="logo">Artisan Gallery</div>
+        <div class="nav-buttons">
+          <span id="welcomeText" class="welcome-text hidden"
+            >Welcome back, Admin</span
+          >
+          <button id="loginBtn" class="btn btn-primary">Admin Access</button>
+          <button id="logoutBtn" class="btn btn-secondary hidden">
+            Sign Out
+          </button>
         </div>
+      </div>
     </div>
 
     <!-- Login Overlay -->
     <div id="loginOverlay" class="login-overlay hidden">
-        <div id="loginForm" class="login-form">
-            <h2>Admin Authentication</h2>
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" id="username" placeholder="Enter your username">
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" placeholder="Enter your password">
-            </div>
-            <button onclick="login()" class="btn btn-primary" style="width: 100%; margin-bottom: 16px;">Sign In</button>
-            <button onclick="hideLogin()" class="btn btn-secondary" style="width: 100%;">Cancel</button>
-            <div id="loginError" style="color: #dc2626; margin-top: 16px; text-align: center; font-size: 14px;"></div>
+      <div id="loginForm" class="login-form">
+        <h2>Admin Authentication</h2>
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" placeholder="Enter your username" />
         </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            placeholder="Enter your password"
+          />
+        </div>
+        <button
+          onclick="login()"
+          class="btn btn-primary"
+          style="width: 100%; margin-bottom: 16px"
+        >
+          Sign In
+        </button>
+        <button
+          onclick="hideLogin()"
+          class="btn btn-secondary"
+          style="width: 100%"
+        >
+          Cancel
+        </button>
+        <div
+          id="loginError"
+          style="
+            color: #dc2626;
+            margin-top: 16px;
+            text-align: center;
+            font-size: 14px;
+          "
+        ></div>
+      </div>
     </div>
 
     <div class="container">
-        <!-- Upload Form (Admin Only) -->
-        <div id="uploadSection" class="upload-form hidden">
-            <h3>Add New Artwork</h3>
-            <div class="file-input-wrapper">
-                <input type="file" id="imageFile" class="file-input" accept="image/*">
-                <label for="imageFile" class="file-input-button">
-                    <svg class="file-input-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
-                    </svg>
-                    <div class="file-input-text">Choose artwork image</div>
-                    <div class="file-input-subtext">Supports JPG, PNG, GIF up to 5MB</div>
-                </label>
+      <!-- Upload Form (Admin Only) -->
+      <div id="uploadSection" class="upload-form hidden">
+        <h3>Add New Artwork</h3>
+        <div class="file-input-wrapper">
+          <input
+            type="file"
+            id="imageFile"
+            class="file-input"
+            accept="image/*"
+          />
+          <label for="imageFile" class="file-input-button">
+            <svg
+              class="file-input-icon"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+              ></path>
+            </svg>
+            <div class="file-input-text">Choose artwork image</div>
+            <div class="file-input-subtext">
+              Supports JPG, PNG, GIF up to 5MB
             </div>
-            <div class="form-group">
-                <label for="artTitle">Artwork Title</label>
-                <input type="text" id="artTitle" placeholder="Enter artwork title">
-            </div>
-            <div class="form-group">
-                <label for="artDescription">Description</label>
-                <textarea id="artDescription" rows="3" placeholder="Describe the artwork, technique, or inspiration..."></textarea>
-            </div>
-            <div class="form-group">
-                <label for="artTags">Tags</label>
-                <input type="text" id="artTags" placeholder="painting, modern, abstract, oil, canvas">
-            </div>
-            <button onclick="uploadArtwork()" class="btn btn-primary">Publish Artwork</button>
+          </label>
         </div>
+        <div class="form-group">
+          <label for="artTitle">Artwork Title</label>
+          <input type="text" id="artTitle" placeholder="Enter artwork title" />
+        </div>
+        <div class="form-group">
+          <label for="artDescription">Description</label>
+          <textarea
+            id="artDescription"
+            rows="3"
+            placeholder="Describe the artwork, technique, or inspiration..."
+          ></textarea>
+        </div>
+        <div class="form-group">
+          <label for="artTags">Tags</label>
+          <input
+            type="text"
+            id="artTags"
+            placeholder="painting, modern, abstract, oil, canvas"
+          />
+        </div>
+        <button onclick="uploadArtwork()" class="btn btn-primary">
+          Publish Artwork
+        </button>
+      </div>
 
-        <!-- Search Bar -->
-        <div class="search-container">
-            <input type="text" id="searchInput" class="search-input" placeholder="Search artworks by title, description, or tags...">
-        </div>
+      <!-- Search Bar -->
+      <div class="search-container">
+        <input
+          type="text"
+          id="searchInput"
+          class="search-input"
+          placeholder="Search artworks by title, description, or tags..."
+        />
+      </div>
 
-        <!-- Gallery -->
-        <div id="gallery" class="gallery">
-            <!-- Artworks will be dynamically loaded here -->
-        </div>
+      <!-- Gallery -->
+      <div id="gallery" class="gallery">
+        <!-- Artworks will be dynamically loaded here -->
+      </div>
     </div>
 
     <!-- Artwork Detail Modal -->
     <div id="artworkModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="modalTitle">Artwork Details</h3>
-                <button class="close-btn" onclick="closeModal()">
-                    <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                    </svg>
-                </button>
-            </div>
-            <div class="modal-body">
-                <img id="modalImage" class="detail-image" alt="Artwork">
-                <div id="modalInfo">
-                    <h4 id="modalArtTitle" style="font-size: 1.5rem; font-weight: 600; margin-bottom: 16px; color: #1a1a1a;"></h4>
-                    <p id="modalArtDescription" style="color: #4b5563; margin-bottom: 24px; line-height: 1.6;"></p>
-                    <div id="modalArtTags" class="artwork-tags" style="margin-bottom: 24px;"></div>
-                    <div class="artwork-actions">
-                        <button id="modalLikeBtn" class="like-btn" onclick="toggleLike(currentArtworkId)">
-                            <svg class="like-icon" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path>
-                            </svg>
-                            <span id="modalLikeCount">0</span> <span style="color: #6b7280;">likes</span>
-                        </button>
-                        <div id="modalAdminActions" class="admin-actions hidden">
-                            <button class="btn btn-secondary" onclick="editArtwork(currentArtworkId)">Edit</button>
-                            <button class="btn btn-secondary" style="background: #dc2626; color: white;" onclick="deleteArtwork(currentArtworkId)">Delete</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Edit Form -->
-                <div id="editForm" class="edit-form hidden">
-                    <h4>Edit Artwork</h4>
-                    <input type="text" id="editTitle" placeholder="Artwork title">
-                    <textarea id="editDescription" rows="3" placeholder="Description"></textarea>
-                    <input type="text" id="editTags" placeholder="Tags (comma-separated)">
-                    <div class="edit-form-actions">
-                        <button class="btn btn-primary" onclick="saveEdit(currentArtworkId)">Save Changes</button>
-                        <button class="btn btn-secondary" onclick="cancelEdit()">Cancel</button>
-                    </div>
-                </div>
-
-                <!-- Comments Section -->
-                <div class="comments-section">
-                    <h4>Comments</h4>
-                    <div class="comment-form">
-                        <input type="text" id="commenterName" placeholder="Your name (optional)">
-                        <textarea id="commentText" rows="3" placeholder="Share your thoughts about this artwork..."></textarea>
-                        <button class="btn btn-primary" onclick="addComment(currentArtworkId)">Post Comment</button>
-                    </div>
-                    <div id="commentsList">
-                        <!-- Comments will be loaded here -->
-                    </div>
-                </div>
-            </div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 id="modalTitle">Artwork Details</h3>
+          <button class="close-btn" onclick="closeModal()">
+            <svg
+              width="24"
+              height="24"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              ></path>
+            </svg>
+          </button>
         </div>
+        <div class="modal-body">
+          <img id="modalImage" class="detail-image" alt="Artwork" />
+          <div id="modalInfo">
+            <h4
+              id="modalArtTitle"
+              style="
+                font-size: 1.5rem;
+                font-weight: 600;
+                margin-bottom: 16px;
+                color: #1a1a1a;
+              "
+            ></h4>
+            <p
+              id="modalArtDescription"
+              style="color: #4b5563; margin-bottom: 24px; line-height: 1.6"
+            ></p>
+            <div
+              id="modalArtTags"
+              class="artwork-tags"
+              style="margin-bottom: 24px"
+            ></div>
+            <div class="artwork-actions">
+              <button
+                id="modalLikeBtn"
+                class="like-btn"
+                onclick="toggleLike(currentArtworkId)"
+              >
+                <svg class="like-icon" fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    fill-rule="evenodd"
+                    d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+                <span id="modalLikeCount">0</span>
+                <span style="color: #6b7280">likes</span>
+              </button>
+              <div id="modalAdminActions" class="admin-actions hidden">
+                <button
+                  class="btn btn-secondary"
+                  onclick="editArtwork(currentArtworkId)"
+                >
+                  Edit
+                </button>
+                <button
+                  class="btn btn-secondary"
+                  style="background: #dc2626; color: white"
+                  onclick="deleteArtwork(currentArtworkId)"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Edit Form -->
+          <div id="editForm" class="edit-form hidden">
+            <h4>Edit Artwork</h4>
+            <input type="text" id="editTitle" placeholder="Artwork title" />
+            <textarea
+              id="editDescription"
+              rows="3"
+              placeholder="Description"
+            ></textarea>
+            <input
+              type="text"
+              id="editTags"
+              placeholder="Tags (comma-separated)"
+            />
+            <div class="edit-form-actions">
+              <button
+                class="btn btn-primary"
+                onclick="saveEdit(currentArtworkId)"
+              >
+                Save Changes
+              </button>
+              <button class="btn btn-secondary" onclick="cancelEdit()">
+                Cancel
+              </button>
+            </div>
+          </div>
+
+          <!-- Comments Section -->
+          <div class="comments-section">
+            <h4>Comments</h4>
+            <div class="comment-form">
+              <input
+                type="text"
+                id="commenterName"
+                placeholder="Your name (optional)"
+              />
+              <textarea
+                id="commentText"
+                rows="3"
+                placeholder="Share your thoughts about this artwork..."
+              ></textarea>
+              <button
+                class="btn btn-primary"
+                onclick="addComment(currentArtworkId)"
+              >
+                Post Comment
+              </button>
+            </div>
+            <div id="commentsList">
+              <!-- Comments will be loaded here -->
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        // Global variables
-        let isLoggedIn = false;
-        let currentArtworkId = null;
-        let artworks = JSON.parse(localStorage.getItem('artworks')) || [];
-        let comments = JSON.parse(localStorage.getItem('comments')) || {};
-        let likes = JSON.parse(localStorage.getItem('likes')) || {};
-        let profile = JSON.parse(localStorage.getItem('profile')) || {
-            name: "Marah Kayal",
-            description: "Passionate artist exploring the intersection of contemporary art and digital expression. Welcome to my creative journey where each piece tells a unique story.",
-            image: null
+      // Global variables
+      const SUPABASE_URL = "https://njpbnagjijmgvddgztzt.supabase.co";
+      const SUPABASE_ANON_KEY =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5qcGJuYWdqaWptZ3ZkZGd6dHp0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIyNzk1NzYsImV4cCI6MjA4Nzg1NTU3Nn0.cDVgF3ADTJMaI80ZRxQJTnma7p-1zEJsiGFPfdZdwtQ";
+      const supabase = window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY,
+      );
+      let isLoggedIn = false;
+      let currentArtworkId = null;
+      let profile = JSON.parse(localStorage.getItem("profile")) || {
+        name: "Marah Kayal",
+        description:
+          "Passionate artist exploring the intersection of contemporary art and digital expression. Welcome to my creative journey where each piece tells a unique story.",
+        image: null,
+      };
+
+      // Initialize the app
+      document.addEventListener("DOMContentLoaded", function () {
+        loadProfile();
+        loadGallery();
+        updateUI();
+        setupSearchFunctionality();
+      });
+
+      // Profile functions
+      function loadProfile() {
+        document.getElementById("profileName").textContent = profile.name;
+        document.getElementById("profileDescription").textContent =
+          profile.description;
+        document.getElementById("profileNameInput").value = profile.name;
+        document.getElementById("profileDescriptionInput").value =
+          profile.description;
+
+        const profileImageDisplay = document.getElementById(
+          "profileImageDisplay",
+        );
+        if (profile.image) {
+          profileImageDisplay.innerHTML = `<img src="${profile.image}" alt="${profile.name}" class="profile-image">`;
+        } else {
+          profileImageDisplay.innerHTML =
+            '<div class="profile-image-placeholder">Click to add your photo</div>';
+        }
+
+        // Add click event to profile image for admin editing
+        profileImageDisplay.onclick = function () {
+          if (isLoggedIn) {
+            document.getElementById("profileImageInput").click();
+          }
         };
+      }
 
-        // Initialize the app
-        document.addEventListener('DOMContentLoaded', function() {
-            loadProfile();
-            loadGallery();
-            updateUI();
-            setupSearchFunctionality();
-        });
+      function saveProfile() {
+        profile.name = document.getElementById("profileNameInput").value.trim();
+        profile.description = document
+          .getElementById("profileDescriptionInput")
+          .value.trim();
 
-        // Profile functions
-        function loadProfile() {
-            document.getElementById('profileName').textContent = profile.name;
-            document.getElementById('profileDescription').textContent = profile.description;
-            document.getElementById('profileNameInput').value = profile.name;
-            document.getElementById('profileDescriptionInput').value = profile.description;
-            
-            const profileImageDisplay = document.getElementById('profileImageDisplay');
-            if (profile.image) {
-                profileImageDisplay.innerHTML = `<img src="${profile.image}" alt="${profile.name}" class="profile-image">`;
-            } else {
-                profileImageDisplay.innerHTML = '<div class="profile-image-placeholder">Click to add your photo</div>';
-            }
-            
-            // Add click event to profile image for admin editing
-            profileImageDisplay.onclick = function() {
-                if (isLoggedIn) {
-                    document.getElementById('profileImageInput').click();
-                }
-            };
+        if (!profile.name) {
+          alert("Name cannot be empty!");
+          return;
         }
 
-        function saveProfile() {
-            profile.name = document.getElementById('profileNameInput').value.trim();
-            profile.description = document.getElementById('profileDescriptionInput').value.trim();
-            
-            if (!profile.name) {
-                alert('Name cannot be empty!');
-                return;
-            }
-            
-            localStorage.setItem('profile', JSON.stringify(profile));
-            loadProfile();
-            alert('Profile updated successfully!');
-        }
+        localStorage.setItem("profile", JSON.stringify(profile));
+        loadProfile();
+        alert("Profile updated successfully!");
+      }
 
-        // Handle profile image upload
-        document.getElementById('profileImageInput').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file && validateImage(file)) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    profile.image = e.target.result;
-                    localStorage.setItem('profile', JSON.stringify(profile));
-                    loadProfile();
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-
-        // Login functionality (Fixed)
-        function showLogin() {
-            const overlay = document.getElementById('loginOverlay');
-            const form = document.getElementById('loginForm');
-            overlay.classList.remove('hidden');
-            
-            // Trigger animation
-            setTimeout(() => {
-                form.classList.add('show');
-            }, 50);
-            
-            // Focus username field
-            document.getElementById('username').focus();
-        }
-
-        function hideLogin() {
-            const overlay = document.getElementById('loginOverlay');
-            const form = document.getElementById('loginForm');
-            
-            form.classList.remove('show');
-            setTimeout(() => {
-                overlay.classList.add('hidden');
-            }, 300);
-            
-            document.getElementById('loginError').textContent = '';
-            document.getElementById('username').value = '';
-            document.getElementById('password').value = '';
-        }
-
-        function login() {
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            
-            if (username === 'admin' && password === 'Aa123456') {
-                isLoggedIn = true;
-                hideLogin();
-                updateUI();
-            } else {
-                document.getElementById('loginError').textContent = 'Invalid credentials. Please try again.';
-                document.getElementById('password').value = '';
-                document.getElementById('password').focus();
-            }
-        }
-
-        function logout() {
-            isLoggedIn = false;
-            updateUI();
-        }
-
-        function updateUI() {
-            const loginBtn = document.getElementById('loginBtn');
-            const logoutBtn = document.getElementById('logoutBtn');
-            const welcomeText = document.getElementById('welcomeText');
-            const uploadSection = document.getElementById('uploadSection');
-            const profileEditSection = document.getElementById('profileEditSection');
-            
-            if (isLoggedIn) {
-                loginBtn.classList.add('hidden');
-                logoutBtn.classList.remove('hidden');
-                welcomeText.classList.remove('hidden');
-                uploadSection.classList.remove('hidden');
-                profileEditSection.classList.remove('hidden');
-            } else {
-                loginBtn.classList.remove('hidden');
-                logoutBtn.classList.add('hidden');
-                welcomeText.classList.add('hidden');
-                uploadSection.classList.add('hidden');
-                profileEditSection.classList.add('hidden');
-            }
-            
-            // Update admin actions visibility
-            document.querySelectorAll('.admin-actions').forEach(el => {
-                if (isLoggedIn) {
-                    el.classList.remove('hidden');
-                } else {
-                    el.classList.add('hidden');
-                }
-            });
-        }
-
-        // Event listeners
-        document.getElementById('loginBtn').addEventListener('click', showLogin);
-        document.getElementById('logoutBtn').addEventListener('click', logout);
-
-        // Close login when clicking outside
-        document.getElementById('loginOverlay').addEventListener('click', function(e) {
-            if (e.target === this) {
-                hideLogin();
-            }
-        });
-
-        // Upload functionality
-        function uploadArtwork() {
-            const fileInput = document.getElementById('imageFile');
-            const title = document.getElementById('artTitle').value.trim();
-            const description = document.getElementById('artDescription').value.trim();
-            const tags = document.getElementById('artTags').value.trim();
-
-            if (!fileInput.files[0] || !title) {
-                alert('Please select an image and enter a title.');
-                return;
-            }
-
-            const file = fileInput.files[0];
+      // Handle profile image upload
+      document
+        .getElementById("profileImageInput")
+        .addEventListener("change", function (e) {
+          const file = e.target.files[0];
+          if (file && validateImage(file)) {
             const reader = new FileReader();
-
-            reader.onload = function(e) {
-                const artwork = {
-                    id: Date.now(),
-                    image: e.target.result,
-                    title: title,
-                    description: description,
-                    tags: tags.split(',').map(tag => tag.trim()).filter(tag => tag),
-                    uploadDate: new Date().toISOString()
-                };
-
-                artworks.unshift(artwork);
-                localStorage.setItem('artworks', JSON.stringify(artworks));
-                
-                // Clear form
-                fileInput.value = '';
-                document.getElementById('artTitle').value = '';
-                document.getElementById('artDescription').value = '';
-                document.getElementById('artTags').value = '';
-                resetFileInput();
-                
-                loadGallery();
-                alert('Artwork published successfully!');
+            reader.onload = function (e) {
+              profile.image = e.target.result;
+              localStorage.setItem("profile", JSON.stringify(profile));
+              loadProfile();
             };
-
             reader.readAsDataURL(file);
+          }
+        });
+
+      // Login functionality (Fixed)
+      function showLogin() {
+        const overlay = document.getElementById("loginOverlay");
+        const form = document.getElementById("loginForm");
+        overlay.classList.remove("hidden");
+
+        // Trigger animation
+        setTimeout(() => {
+          form.classList.add("show");
+        }, 50);
+
+        // Focus username field
+        document.getElementById("username").focus();
+      }
+
+      function hideLogin() {
+        const overlay = document.getElementById("loginOverlay");
+        const form = document.getElementById("loginForm");
+
+        form.classList.remove("show");
+        setTimeout(() => {
+          overlay.classList.add("hidden");
+        }, 300);
+
+        document.getElementById("loginError").textContent = "";
+        document.getElementById("username").value = "";
+        document.getElementById("password").value = "";
+      }
+
+      function login() {
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+
+        if (username === "admin" && password === "Aa123456") {
+          isLoggedIn = true;
+          hideLogin();
+          updateUI();
+        } else {
+          document.getElementById("loginError").textContent =
+            "Invalid credentials. Please try again.";
+          document.getElementById("password").value = "";
+          document.getElementById("password").focus();
+        }
+      }
+
+      function logout() {
+        isLoggedIn = false;
+        updateUI();
+      }
+
+      function updateUI() {
+        const loginBtn = document.getElementById("loginBtn");
+        const logoutBtn = document.getElementById("logoutBtn");
+        const welcomeText = document.getElementById("welcomeText");
+        const uploadSection = document.getElementById("uploadSection");
+        const profileEditSection =
+          document.getElementById("profileEditSection");
+
+        if (isLoggedIn) {
+          loginBtn.classList.add("hidden");
+          logoutBtn.classList.remove("hidden");
+          welcomeText.classList.remove("hidden");
+          uploadSection.classList.remove("hidden");
+          profileEditSection.classList.remove("hidden");
+        } else {
+          loginBtn.classList.remove("hidden");
+          logoutBtn.classList.add("hidden");
+          welcomeText.classList.add("hidden");
+          uploadSection.classList.add("hidden");
+          profileEditSection.classList.add("hidden");
         }
 
-        function resetFileInput() {
-            const label = document.querySelector('.file-input-button');
-            label.innerHTML = `
+        // Update admin actions visibility
+        document.querySelectorAll(".admin-actions").forEach((el) => {
+          if (isLoggedIn) {
+            el.classList.remove("hidden");
+          } else {
+            el.classList.add("hidden");
+          }
+        });
+      }
+
+      // Event listeners
+      document.getElementById("loginBtn").addEventListener("click", showLogin);
+      document.getElementById("logoutBtn").addEventListener("click", logout);
+
+      // Close login when clicking outside
+      document
+        .getElementById("loginOverlay")
+        .addEventListener("click", function (e) {
+          if (e.target === this) {
+            hideLogin();
+          }
+        });
+
+      // Upload functionality
+      async function uploadArtwork() {
+        if (!isLoggedIn) {
+          alert("Admin access required.");
+          return;
+        }
+
+        const fileInput = document.getElementById("imageFile");
+        const title = document.getElementById("artTitle").value.trim();
+        const description = document
+          .getElementById("artDescription")
+          .value.trim();
+        const tags = document.getElementById("artTags").value.trim();
+
+        if (!fileInput.files[0] || !title) {
+          alert("Please select an image and enter a title.");
+          return;
+        }
+
+        const file = fileInput.files[0];
+        const fileName = Date.now() + "_" + file.name;
+
+        // Upload image to Supabase storage
+        const { error: uploadError } = await supabase.storage
+          .from("artworks")
+          .upload(fileName, file);
+
+        if (uploadError) {
+          console.error(uploadError);
+          alert("Image upload failed.");
+          return;
+        }
+
+        // Get public URL
+        const { data: publicUrlData } = supabase.storage
+          .from("artworks")
+          .getPublicUrl(fileName);
+
+        const imageUrl = publicUrlData.publicUrl;
+
+        // Insert into database
+        const { error: insertError } = await supabase.from("artworks").insert([
+          {
+            title: title,
+            description: description,
+            image_url: imageUrl,
+            tags: tags,
+          },
+        ]);
+
+        if (insertError) {
+          console.error(insertError);
+          alert("Database insert failed.");
+          return;
+        }
+
+        // Reset form
+        fileInput.value = "";
+        document.getElementById("artTitle").value = "";
+        document.getElementById("artDescription").value = "";
+        document.getElementById("artTags").value = "";
+
+        alert("Artwork uploaded successfully!");
+        loadGallery();
+      }
+
+      function resetFileInput() {
+        const label = document.querySelector(".file-input-button");
+        label.innerHTML = `
                 <svg class="file-input-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
                 </svg>
                 <div class="file-input-text">Choose artwork image</div>
                 <div class="file-input-subtext">Supports JPG, PNG, GIF up to 5MB</div>
             `;
+      }
+
+      // Gallery functions
+      async function loadGallery() {
+        const gallery = document.getElementById("gallery");
+        gallery.innerHTML = "Loading...";
+
+        const { data, error } = await supabase
+          .from("artworks")
+          .select("*")
+          .order("created_at", { ascending: false });
+
+        if (error) {
+          gallery.innerHTML = "Error loading artworks.";
+          console.error(error);
+          return;
         }
 
-        // Gallery functions
-        function loadGallery() {
-            const gallery = document.getElementById('gallery');
-            gallery.innerHTML = '';
+        gallery.innerHTML = "";
 
-            if (artworks.length === 0) {
-                gallery.innerHTML = createEmptyState();
-                return;
-            }
-
-            artworks.forEach(artwork => {
-                const card = createArtworkCard(artwork);
-                gallery.appendChild(card);
-            });
+        if (data.length === 0) {
+          gallery.innerHTML = "<p>No artworks yet.</p>";
+          return;
         }
 
-        function createEmptyState() {
-            return `
+        data.forEach((artwork) => {
+          const card = createArtworkCard(artwork);
+          gallery.appendChild(card);
+        });
+      }
+
+      function createEmptyState() {
+        return `
                 <div class="empty-state">
                     <div class="empty-state-icon">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1400,32 +1633,32 @@
                     ${isLoggedIn ? '<button class="btn btn-primary" onclick="document.getElementById(\'imageFile\').click()">Upload First Artwork</button>' : '<button class="btn btn-primary" onclick="showLogin()">Admin Access Required</button>'}
                 </div>
             `;
-        }
+      }
 
-        function createArtworkCard(artwork) {
-            const card = document.createElement('div');
-            card.className = 'artwork-card';
-            card.onclick = () => openArtworkModal(artwork.id);
+      function createArtworkCard(artwork) {
+        const card = document.createElement("div");
+        card.className = "artwork-card";
+        card.onclick = () => openArtworkModal(artwork.id);
 
-            const likesCount = likes[artwork.id] || 0;
-            const isLiked = localStorage.getItem(`liked_${artwork.id}`) === 'true';
+        const likesCount = likes[artwork.id] || 0;
+        const isLiked = localStorage.getItem(`liked_${artwork.id}`) === "true";
 
-            card.innerHTML = `
-                <img src="${artwork.image}" alt="${artwork.title}" class="artwork-image">
+        card.innerHTML = `
+                <img src="${artwork.image_url}" alt="${artwork.title}" class="artwork-image">
                 <div class="artwork-info">
                     <h3 class="artwork-title">${artwork.title}</h3>
                     <p class="artwork-description">${artwork.description}</p>
                     <div class="artwork-tags">
-                        ${artwork.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                        ${artwork.tags.map((tag) => `<span class="tag">${tag}</span>`).join("")}
                     </div>
                     <div class="artwork-actions">
-                        <button class="like-btn ${isLiked ? 'liked' : ''}" onclick="event.stopPropagation(); toggleLike(${artwork.id})">
+                        <button class="like-btn ${isLiked ? "liked" : ""}" onclick="event.stopPropagation(); toggleLike(${artwork.id})">
                             <svg class="like-icon" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path>
                             </svg>
                             <span>${likesCount}</span> <span style="color: #6b7280;">likes</span>
                         </button>
-                        <div class="admin-actions ${isLoggedIn ? '' : 'hidden'}">
+                        <div class="admin-actions ${isLoggedIn ? "" : "hidden"}">
                             <button class="btn btn-secondary" onclick="event.stopPropagation(); editArtwork(${artwork.id})">Edit</button>
                             <button class="btn btn-secondary" style="background: #dc2626; color: white; border-color: #dc2626;" onclick="event.stopPropagation(); deleteArtwork(${artwork.id})">Delete</button>
                         </div>
@@ -1433,219 +1666,252 @@
                 </div>
             `;
 
-            return card;
+        return card;
+      }
+
+      // Modal functions
+      function openArtworkModal(artworkId) {
+        const artwork = artworks.find((a) => a.id === artworkId);
+        if (!artwork) return;
+
+        currentArtworkId = artworkId;
+        const modal = document.getElementById("artworkModal");
+
+        document.getElementById("modalImage").src = artwork.image;
+        document.getElementById("modalArtTitle").textContent = artwork.title;
+        document.getElementById("modalArtDescription").textContent =
+          artwork.description;
+
+        const tagsContainer = document.getElementById("modalArtTags");
+        tagsContainer.innerHTML = artwork.tags
+          .map((tag) => `<span class="tag">${tag}</span>`)
+          .join("");
+
+        updateModalLikeButton(artworkId);
+        loadComments(artworkId);
+
+        modal.style.display = "flex";
+
+        // Update admin actions visibility
+        document
+          .getElementById("modalAdminActions")
+          .classList.toggle("hidden", !isLoggedIn);
+      }
+
+      function closeModal() {
+        document.getElementById("artworkModal").style.display = "none";
+        document.getElementById("editForm").classList.add("hidden");
+        currentArtworkId = null;
+      }
+
+      // Like functionality
+      function toggleLike(artworkId) {
+        const likedKey = `liked_${artworkId}`;
+        const isCurrentlyLiked = localStorage.getItem(likedKey) === "true";
+
+        if (isCurrentlyLiked) {
+          likes[artworkId] = Math.max(0, (likes[artworkId] || 0) - 1);
+          localStorage.removeItem(likedKey);
+        } else {
+          likes[artworkId] = (likes[artworkId] || 0) + 1;
+          localStorage.setItem(likedKey, "true");
         }
 
-        // Modal functions
-        function openArtworkModal(artworkId) {
-            const artwork = artworks.find(a => a.id === artworkId);
-            if (!artwork) return;
+        localStorage.setItem("likes", JSON.stringify(likes));
+        loadGallery();
 
-            currentArtworkId = artworkId;
-            const modal = document.getElementById('artworkModal');
-            
-            document.getElementById('modalImage').src = artwork.image;
-            document.getElementById('modalArtTitle').textContent = artwork.title;
-            document.getElementById('modalArtDescription').textContent = artwork.description;
-            
-            const tagsContainer = document.getElementById('modalArtTags');
-            tagsContainer.innerHTML = artwork.tags.map(tag => `<span class="tag">${tag}</span>`).join('');
-            
-            updateModalLikeButton(artworkId);
-            loadComments(artworkId);
-            
-            modal.style.display = 'flex';
-            
-            // Update admin actions visibility
-            document.getElementById('modalAdminActions').classList.toggle('hidden', !isLoggedIn);
+        if (currentArtworkId === artworkId) {
+          updateModalLikeButton(artworkId);
+        }
+      }
+
+      function updateModalLikeButton(artworkId) {
+        const likesCount = likes[artworkId] || 0;
+        const isLiked = localStorage.getItem(`liked_${artworkId}`) === "true";
+
+        document.getElementById("modalLikeCount").textContent = likesCount;
+        document
+          .getElementById("modalLikeBtn")
+          .classList.toggle("liked", isLiked);
+      }
+
+      // Edit functionality
+      function editArtwork(artworkId) {
+        const artwork = artworks.find((a) => a.id === artworkId);
+        if (!artwork || !isLoggedIn) return;
+
+        document.getElementById("editTitle").value = artwork.title;
+        document.getElementById("editDescription").value = artwork.description;
+        document.getElementById("editTags").value = artwork.tags.join(", ");
+        document.getElementById("editForm").classList.remove("hidden");
+      }
+
+      function saveEdit(artworkId) {
+        const title = document.getElementById("editTitle").value.trim();
+        const description = document
+          .getElementById("editDescription")
+          .value.trim();
+        const tags = document.getElementById("editTags").value.trim();
+
+        if (!title) {
+          alert("Title cannot be empty!");
+          return;
         }
 
-        function closeModal() {
-            document.getElementById('artworkModal').style.display = 'none';
-            document.getElementById('editForm').classList.add('hidden');
-            currentArtworkId = null;
+        const artworkIndex = artworks.findIndex((a) => a.id === artworkId);
+        if (artworkIndex === -1) return;
+
+        artworks[artworkIndex].title = title;
+        artworks[artworkIndex].description = description;
+        artworks[artworkIndex].tags = tags
+          .split(",")
+          .map((tag) => tag.trim())
+          .filter((tag) => tag);
+
+        localStorage.setItem("artworks", JSON.stringify(artworks));
+
+        cancelEdit();
+        loadGallery();
+
+        // Update modal content
+        document.getElementById("modalArtTitle").textContent = title;
+        document.getElementById("modalArtDescription").textContent =
+          description;
+        const tagsContainer = document.getElementById("modalArtTags");
+        tagsContainer.innerHTML = artworks[artworkIndex].tags
+          .map((tag) => `<span class="tag">${tag}</span>`)
+          .join("");
+      }
+
+      function cancelEdit() {
+        document.getElementById("editForm").classList.add("hidden");
+      }
+
+      // Delete functionality
+      function deleteArtwork(artworkId) {
+        if (!isLoggedIn) return;
+
+        if (
+          confirm(
+            "Are you sure you want to delete this artwork? This action cannot be undone.",
+          )
+        ) {
+          artworks = artworks.filter((a) => a.id !== artworkId);
+          localStorage.setItem("artworks", JSON.stringify(artworks));
+
+          // Clean up associated data
+          delete likes[artworkId];
+          delete comments[artworkId];
+          localStorage.setItem("likes", JSON.stringify(likes));
+          localStorage.setItem("comments", JSON.stringify(comments));
+          localStorage.removeItem(`liked_${artworkId}`);
+
+          loadGallery();
+          closeModal();
+        }
+      }
+
+      // Comments functionality
+      function addComment(artworkId) {
+        const name =
+          document.getElementById("commenterName").value.trim() || "Anonymous";
+        const text = document.getElementById("commentText").value.trim();
+
+        if (!text) {
+          alert("Please enter a comment.");
+          return;
         }
 
-        // Like functionality
-        function toggleLike(artworkId) {
-            const likedKey = `liked_${artworkId}`;
-            const isCurrentlyLiked = localStorage.getItem(likedKey) === 'true';
-            
-            if (isCurrentlyLiked) {
-                likes[artworkId] = Math.max(0, (likes[artworkId] || 0) - 1);
-                localStorage.removeItem(likedKey);
-            } else {
-                likes[artworkId] = (likes[artworkId] || 0) + 1;
-                localStorage.setItem(likedKey, 'true');
-            }
-            
-            localStorage.setItem('likes', JSON.stringify(likes));
-            loadGallery();
-            
-            if (currentArtworkId === artworkId) {
-                updateModalLikeButton(artworkId);
-            }
+        if (!comments[artworkId]) {
+          comments[artworkId] = [];
         }
 
-        function updateModalLikeButton(artworkId) {
-            const likesCount = likes[artworkId] || 0;
-            const isLiked = localStorage.getItem(`liked_${artworkId}`) === 'true';
-            
-            document.getElementById('modalLikeCount').textContent = likesCount;
-            document.getElementById('modalLikeBtn').classList.toggle('liked', isLiked);
+        const comment = {
+          id: Date.now(),
+          name: name,
+          text: text,
+          date: new Date().toISOString(),
+        };
+
+        comments[artworkId].unshift(comment);
+        localStorage.setItem("comments", JSON.stringify(comments));
+
+        document.getElementById("commenterName").value = "";
+        document.getElementById("commentText").value = "";
+
+        loadComments(artworkId);
+      }
+
+      function loadComments(artworkId) {
+        const commentsList = document.getElementById("commentsList");
+        const artworkComments = comments[artworkId] || [];
+
+        if (artworkComments.length === 0) {
+          commentsList.innerHTML =
+            '<p style="color: #9ca3af; text-align: center; padding: 32px; font-style: italic;">No comments yet. Share your thoughts about this artwork!</p>';
+          return;
         }
 
-        // Edit functionality
-        function editArtwork(artworkId) {
-            const artwork = artworks.find(a => a.id === artworkId);
-            if (!artwork || !isLoggedIn) return;
-
-            document.getElementById('editTitle').value = artwork.title;
-            document.getElementById('editDescription').value = artwork.description;
-            document.getElementById('editTags').value = artwork.tags.join(', ');
-            document.getElementById('editForm').classList.remove('hidden');
-        }
-
-        function saveEdit(artworkId) {
-            const title = document.getElementById('editTitle').value.trim();
-            const description = document.getElementById('editDescription').value.trim();
-            const tags = document.getElementById('editTags').value.trim();
-
-            if (!title) {
-                alert('Title cannot be empty!');
-                return;
-            }
-
-            const artworkIndex = artworks.findIndex(a => a.id === artworkId);
-            if (artworkIndex === -1) return;
-
-            artworks[artworkIndex].title = title;
-            artworks[artworkIndex].description = description;
-            artworks[artworkIndex].tags = tags.split(',').map(tag => tag.trim()).filter(tag => tag);
-
-            localStorage.setItem('artworks', JSON.stringify(artworks));
-            
-            cancelEdit();
-            loadGallery();
-            
-            // Update modal content
-            document.getElementById('modalArtTitle').textContent = title;
-            document.getElementById('modalArtDescription').textContent = description;
-            const tagsContainer = document.getElementById('modalArtTags');
-            tagsContainer.innerHTML = artworks[artworkIndex].tags.map(tag => `<span class="tag">${tag}</span>`).join('');
-        }
-
-        function cancelEdit() {
-            document.getElementById('editForm').classList.add('hidden');
-        }
-
-        // Delete functionality
-        function deleteArtwork(artworkId) {
-            if (!isLoggedIn) return;
-            
-            if (confirm('Are you sure you want to delete this artwork? This action cannot be undone.')) {
-                artworks = artworks.filter(a => a.id !== artworkId);
-                localStorage.setItem('artworks', JSON.stringify(artworks));
-                
-                // Clean up associated data
-                delete likes[artworkId];
-                delete comments[artworkId];
-                localStorage.setItem('likes', JSON.stringify(likes));
-                localStorage.setItem('comments', JSON.stringify(comments));
-                localStorage.removeItem(`liked_${artworkId}`);
-                
-                loadGallery();
-                closeModal();
-            }
-        }
-
-        // Comments functionality
-        function addComment(artworkId) {
-            const name = document.getElementById('commenterName').value.trim() || 'Anonymous';
-            const text = document.getElementById('commentText').value.trim();
-
-            if (!text) {
-                alert('Please enter a comment.');
-                return;
-            }
-
-            if (!comments[artworkId]) {
-                comments[artworkId] = [];
-            }
-
-            const comment = {
-                id: Date.now(),
-                name: name,
-                text: text,
-                date: new Date().toISOString()
-            };
-
-            comments[artworkId].unshift(comment);
-            localStorage.setItem('comments', JSON.stringify(comments));
-
-            document.getElementById('commenterName').value = '';
-            document.getElementById('commentText').value = '';
-
-            loadComments(artworkId);
-        }
-
-        function loadComments(artworkId) {
-            const commentsList = document.getElementById('commentsList');
-            const artworkComments = comments[artworkId] || [];
-
-            if (artworkComments.length === 0) {
-                commentsList.innerHTML = '<p style="color: #9ca3af; text-align: center; padding: 32px; font-style: italic;">No comments yet. Share your thoughts about this artwork!</p>';
-                return;
-            }
-
-            commentsList.innerHTML = artworkComments.map(comment => `
+        commentsList.innerHTML = artworkComments
+          .map(
+            (comment) => `
                 <div class="comment">
                     <div class="comment-author">${comment.name}</div>
                     <div class="comment-text">${comment.text}</div>
                     <div class="comment-date">${new Date(comment.date).toLocaleString()}</div>
                 </div>
-            `).join('');
-        }
+            `,
+          )
+          .join("");
+      }
 
-        // Search functionality
-        function setupSearchFunctionality() {
-            const searchInput = document.getElementById('searchInput');
-            searchInput.addEventListener('input', function(e) {
-                filterGallery(e.target.value.toLowerCase());
-            });
-        }
+      // Search functionality
+      function setupSearchFunctionality() {
+        const searchInput = document.getElementById("searchInput");
+        searchInput.addEventListener("input", function (e) {
+          filterGallery(e.target.value.toLowerCase());
+        });
+      }
 
-        function filterGallery(searchTerm) {
-            const cards = document.querySelectorAll('.artwork-card');
-            let visibleCount = 0;
+      function filterGallery(searchTerm) {
+        const cards = document.querySelectorAll(".artwork-card");
+        let visibleCount = 0;
 
-            cards.forEach(card => {
-                const title = card.querySelector('.artwork-title')?.textContent.toLowerCase() || '';
-                const description = card.querySelector('.artwork-description')?.textContent.toLowerCase() || '';
-                const tags = Array.from(card.querySelectorAll('.tag')).map(tag => tag.textContent.toLowerCase()).join(' ');
-                
-                const isVisible = title.includes(searchTerm) || 
-                                description.includes(searchTerm) || 
-                                tags.includes(searchTerm);
-                
-                card.style.display = isVisible ? 'block' : 'none';
-                if (isVisible) visibleCount++;
-            });
+        cards.forEach((card) => {
+          const title =
+            card.querySelector(".artwork-title")?.textContent.toLowerCase() ||
+            "";
+          const description =
+            card
+              .querySelector(".artwork-description")
+              ?.textContent.toLowerCase() || "";
+          const tags = Array.from(card.querySelectorAll(".tag"))
+            .map((tag) => tag.textContent.toLowerCase())
+            .join(" ");
 
-            // Show "no results" message if needed
-            const gallery = document.getElementById('gallery');
-            let noResults = document.getElementById('noSearchResults');
-            
-            if (visibleCount === 0 && searchTerm && artworks.length > 0) {
-                if (!noResults) {
-                    noResults = document.createElement('div');
-                    noResults.id = 'noSearchResults';
-                    noResults.className = 'empty-state';
-                    
-                    noResults.style.gridColumn = '1 / -1';
-                    gallery.appendChild(noResults);
-                }
-                noResults.innerHTML = `
+          const isVisible =
+            title.includes(searchTerm) ||
+            description.includes(searchTerm) ||
+            tags.includes(searchTerm);
+
+          card.style.display = isVisible ? "block" : "none";
+          if (isVisible) visibleCount++;
+        });
+
+        // Show "no results" message if needed
+        const gallery = document.getElementById("gallery");
+        let noResults = document.getElementById("noSearchResults");
+
+        if (visibleCount === 0 && searchTerm && artworks.length > 0) {
+          if (!noResults) {
+            noResults = document.createElement("div");
+            noResults.id = "noSearchResults";
+            noResults.className = "empty-state";
+
+            noResults.style.gridColumn = "1 / -1";
+            gallery.appendChild(noResults);
+          }
+          noResults.innerHTML = `
                     <div class="empty-state-icon">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
@@ -1655,270 +1921,316 @@
                     <p>Try adjusting your search terms or browse all artworks.</p>
                     <button class="btn btn-secondary" onclick="document.getElementById('searchInput').value = ''; filterGallery('');">Clear Search</button>
                 `;
-            } else if (noResults) {
-                noResults.remove();
-            }
+        } else if (noResults) {
+          noResults.remove();
         }
+      }
 
-        // Close modal when clicking outside
-        document.getElementById('artworkModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeModal();
-            }
+      // Close modal when clicking outside
+      document
+        .getElementById("artworkModal")
+        .addEventListener("click", function (e) {
+          if (e.target === this) {
+            closeModal();
+          }
         });
 
-        // Handle file input change
-        document.getElementById('imageFile').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            const label = document.querySelector('.file-input-button');
-            
-            if (file && validateImage(file)) {
-                label.innerHTML = `
+      // Handle file input change
+      document
+        .getElementById("imageFile")
+        .addEventListener("change", function (e) {
+          const file = e.target.files[0];
+          const label = document.querySelector(".file-input-button");
+
+          if (file && validateImage(file)) {
+            label.innerHTML = `
                     <svg class="file-input-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: #10b981;">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                     </svg>
                     <div class="file-input-text" style="color: #10b981;">Selected: ${file.name}</div>
                     <div class="file-input-subtext">Click to change file</div>
                 `;
-            } else if (!file) {
-                resetFileInput();
-            }
+          } else if (!file) {
+            resetFileInput();
+          }
         });
 
-        // Image validation
-        function validateImage(file) {
-            const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
-            const maxSize = 5 * 1024 * 1024; // 5MB
+      // Image validation
+      function validateImage(file) {
+        const validTypes = [
+          "image/jpeg",
+          "image/jpg",
+          "image/png",
+          "image/gif",
+          "image/webp",
+        ];
+        const maxSize = 5 * 1024 * 1024; // 5MB
 
-            if (!validTypes.includes(file.type)) {
-                alert('Please select a valid image file (JPEG, PNG, GIF, WebP).');
-                resetFileInput();
-                return false;
-            }
-
-            if (file.size > maxSize) {
-                alert(`File size too large. Please select an image smaller than 5MB.`);
-                resetFileInput();
-                return false;
-            }
-
-            return true;
+        if (!validTypes.includes(file.type)) {
+          alert("Please select a valid image file (JPEG, PNG, GIF, WebP).");
+          resetFileInput();
+          return false;
         }
 
-        // Handle Enter key for login
-        document.getElementById('password').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                login();
-            }
-        });
-
-        document.getElementById('username').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                login();
-            }
-        });
-
-        // Handle Enter key for comments
-        document.getElementById('commentText').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter' && e.ctrlKey) {
-                addComment(currentArtworkId);
-            }
-        });
-
-        // Keyboard shortcuts
-        document.addEventListener('keydown', function(e) {
-            // ESC to close modal
-            if (e.key === 'Escape') {
-                closeModal();
-                hideLogin();
-            }
-            
-            // Ctrl+Shift+A for admin login
-            if (e.ctrlKey && e.shiftKey && e.key === 'A' && !isLoggedIn) {
-                showLogin();
-            }
-        });
-
-        // Touch support for mobile
-        let touchStartY = 0;
-        document.getElementById('artworkModal').addEventListener('touchstart', function(e) {
-            touchStartY = e.touches[0].clientY;
-        });
-
-        document.getElementById('artworkModal').addEventListener('touchend', function(e) {
-            const touchEndY = e.changedTouches[0].clientY;
-            const diff = touchStartY - touchEndY;
-            
-            if (diff < -100) {
-                closeModal();
-            }
-        });
-
-        // Animation for new artworks
-        function animateNewArtwork() {
-            const newCard = document.querySelector('.artwork-card:first-child');
-            if (newCard) {
-                newCard.style.transform = 'scale(0.8)';
-                newCard.style.opacity = '0';
-                setTimeout(() => {
-                    newCard.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
-                    newCard.style.transform = 'scale(1)';
-                    newCard.style.opacity = '1';
-                }, 100);
-            }
+        if (file.size > maxSize) {
+          alert(
+            `File size too large. Please select an image smaller than 5MB.`,
+          );
+          resetFileInput();
+          return false;
         }
 
-        // Update upload to include animation
-        const originalLoad = loadGallery;
-        loadGallery = function() {
-            const wasEmpty = artworks.length === 0;
-            originalLoad();
-            if (!wasEmpty && artworks.length > 0) {
-                setTimeout(animateNewArtwork, 100);
-            }
+        return true;
+      }
+
+      // Handle Enter key for login
+      document
+        .getElementById("password")
+        .addEventListener("keypress", function (e) {
+          if (e.key === "Enter") {
+            login();
+          }
+        });
+
+      document
+        .getElementById("username")
+        .addEventListener("keypress", function (e) {
+          if (e.key === "Enter") {
+            login();
+          }
+        });
+
+      // Handle Enter key for comments
+      document
+        .getElementById("commentText")
+        .addEventListener("keypress", function (e) {
+          if (e.key === "Enter" && e.ctrlKey) {
+            addComment(currentArtworkId);
+          }
+        });
+
+      // Keyboard shortcuts
+      document.addEventListener("keydown", function (e) {
+        // ESC to close modal
+        if (e.key === "Escape") {
+          closeModal();
+          hideLogin();
+        }
+
+        // Ctrl+Shift+A for admin login
+        if (e.ctrlKey && e.shiftKey && e.key === "A" && !isLoggedIn) {
+          showLogin();
+        }
+      });
+
+      // Touch support for mobile
+      let touchStartY = 0;
+      document
+        .getElementById("artworkModal")
+        .addEventListener("touchstart", function (e) {
+          touchStartY = e.touches[0].clientY;
+        });
+
+      document
+        .getElementById("artworkModal")
+        .addEventListener("touchend", function (e) {
+          const touchEndY = e.changedTouches[0].clientY;
+          const diff = touchStartY - touchEndY;
+
+          if (diff < -100) {
+            closeModal();
+          }
+        });
+
+      // Animation for new artworks
+      function animateNewArtwork() {
+        const newCard = document.querySelector(".artwork-card:first-child");
+        if (newCard) {
+          newCard.style.transform = "scale(0.8)";
+          newCard.style.opacity = "0";
+          setTimeout(() => {
+            newCard.style.transition = "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)";
+            newCard.style.transform = "scale(1)";
+            newCard.style.opacity = "1";
+          }, 100);
+        }
+      }
+
+      // Update upload to include animation
+      const originalLoad = loadGallery;
+      loadGallery = function () {
+        const wasEmpty = artworks.length === 0;
+        originalLoad();
+        if (!wasEmpty && artworks.length > 0) {
+          setTimeout(animateNewArtwork, 100);
+        }
+      };
+
+      // Auto-save profile changes (for better UX)
+      document.getElementById("profileNameInput").addEventListener(
+        "input",
+        debounce(function () {
+          if (isLoggedIn && this.value.trim()) {
+            profile.name = this.value.trim();
+            document.getElementById("profileName").textContent = profile.name;
+            localStorage.setItem("profile", JSON.stringify(profile));
+          }
+        }, 1000),
+      );
+
+      document.getElementById("profileDescriptionInput").addEventListener(
+        "input",
+        debounce(function () {
+          if (isLoggedIn && this.value.trim()) {
+            profile.description = this.value.trim();
+            document.getElementById("profileDescription").textContent =
+              profile.description;
+            localStorage.setItem("profile", JSON.stringify(profile));
+          }
+        }, 1000),
+      );
+
+      // Debounce function for auto-save
+      function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+          const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+          };
+          clearTimeout(timeout);
+          timeout = setTimeout(later, wait);
         };
+      }
 
-        // Auto-save profile changes (for better UX)
-        document.getElementById('profileNameInput').addEventListener('input', debounce(function() {
-            if (isLoggedIn && this.value.trim()) {
-                profile.name = this.value.trim();
-                document.getElementById('profileName').textContent = profile.name;
-                localStorage.setItem('profile', JSON.stringify(profile));
-            }
-        }, 1000));
+      // Enhanced drag and drop for file uploads
+      function setupDragAndDrop() {
+        const uploadArea = document.querySelector(".file-input-button");
+        const profileUploadArea = document.querySelector(
+          ".profile-image-button",
+        );
 
-        document.getElementById('profileDescriptionInput').addEventListener('input', debounce(function() {
-            if (isLoggedIn && this.value.trim()) {
-                profile.description = this.value.trim();
-                document.getElementById('profileDescription').textContent = profile.description;
-                localStorage.setItem('profile', JSON.stringify(profile));
-            }
-        }, 1000));
+        [uploadArea, profileUploadArea].forEach((area) => {
+          if (!area) return;
 
-        // Debounce function for auto-save
-        function debounce(func, wait) {
-            let timeout;
-            return function executedFunction(...args) {
-                const later = () => {
-                    clearTimeout(timeout);
-                    func(...args);
-                };
-                clearTimeout(timeout);
-                timeout = setTimeout(later, wait);
-            };
-        }
+          ["dragenter", "dragover", "dragleave", "drop"].forEach(
+            (eventName) => {
+              area.addEventListener(eventName, preventDefaults, false);
+            },
+          );
 
-        // Enhanced drag and drop for file uploads
-        function setupDragAndDrop() {
-            const uploadArea = document.querySelector('.file-input-button');
-            const profileUploadArea = document.querySelector('.profile-image-button');
-            
-            [uploadArea, profileUploadArea].forEach(area => {
-                if (!area) return;
-                
-                ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-                    area.addEventListener(eventName, preventDefaults, false);
-                });
+          function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+          }
 
-                function preventDefaults(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
+          ["dragenter", "dragover"].forEach((eventName) => {
+            area.addEventListener(eventName, () => {
+              area.style.background = "#e5e7eb";
+              area.style.borderColor = "#6b7280";
+            });
+          });
+
+          ["dragleave", "drop"].forEach((eventName) => {
+            area.addEventListener(eventName, () => {
+              area.style.background = "#f9fafb";
+              area.style.borderColor = "#d1d5db";
+            });
+          });
+
+          area.addEventListener("drop", (e) => {
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+              const file = files[0];
+              if (validateImage(file)) {
+                if (area === uploadArea) {
+                  document.getElementById("imageFile").files = files;
+                  document
+                    .getElementById("imageFile")
+                    .dispatchEvent(new Event("change"));
+                } else {
+                  document.getElementById("profileImageInput").files = files;
+                  document
+                    .getElementById("profileImageInput")
+                    .dispatchEvent(new Event("change"));
                 }
-
-                ['dragenter', 'dragover'].forEach(eventName => {
-                    area.addEventListener(eventName, () => {
-                        area.style.background = '#e5e7eb';
-                        area.style.borderColor = '#6b7280';
-                    });
-                });
-
-                ['dragleave', 'drop'].forEach(eventName => {
-                    area.addEventListener(eventName, () => {
-                        area.style.background = '#f9fafb';
-                        area.style.borderColor = '#d1d5db';
-                    });
-                });
-
-                area.addEventListener('drop', (e) => {
-                    const files = e.dataTransfer.files;
-                    if (files.length > 0) {
-                        const file = files[0];
-                        if (validateImage(file)) {
-                            if (area === uploadArea) {
-                                document.getElementById('imageFile').files = files;
-                                document.getElementById('imageFile').dispatchEvent(new Event('change'));
-                            } else {
-                                document.getElementById('profileImageInput').files = files;
-                                document.getElementById('profileImageInput').dispatchEvent(new Event('change'));
-                            }
-                        }
-                    }
-                });
-            });
-        }
-
-        // Initialize drag and drop after DOM is loaded
-        setTimeout(setupDragAndDrop, 100);
-
-        // Performance optimization: Lazy loading for images
-        function setupLazyLoading() {
-            const imageObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const img = entry.target;
-                        if (img.dataset.src) {
-                            img.src = img.dataset.src;
-                            img.removeAttribute('data-src');
-                            observer.unobserve(img);
-                        }
-                    }
-                });
-            });
-
-            // Observe all artwork images
-            document.querySelectorAll('.artwork-image[data-src]').forEach(img => {
-                imageObserver.observe(img);
-            });
-        }
-
-        // Enhanced error handling and user feedback
-        window.addEventListener('error', function(e) {
-            console.error('Gallery Error:', e.error);
-            // Could implement user-friendly error notifications here
-        });
-
-        // Save state before page unload
-        window.addEventListener('beforeunload', function() {
-            if (isLoggedIn) {
-                localStorage.setItem('lastLoginTime', Date.now());
+              }
             }
+          });
         });
+      }
 
-        // Auto-logout after inactivity (optional security feature)
-        let inactivityTimer;
-        function resetInactivityTimer() {
-            clearTimeout(inactivityTimer);
-            if (isLoggedIn) {
-                inactivityTimer = setTimeout(() => {
-                    alert('You have been logged out due to inactivity.');
-                    logout();
-                }, 30 * 60 * 1000); // 30 minutes
+      // Initialize drag and drop after DOM is loaded
+      setTimeout(setupDragAndDrop, 100);
+
+      // Performance optimization: Lazy loading for images
+      function setupLazyLoading() {
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const img = entry.target;
+              if (img.dataset.src) {
+                img.src = img.dataset.src;
+                img.removeAttribute("data-src");
+                observer.unobserve(img);
+              }
             }
-        }
-
-        // Track user activity
-        ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart'].forEach(event => {
-            document.addEventListener(event, resetInactivityTimer, true);
+          });
         });
 
-        // Initialize inactivity timer
-        resetInactivityTimer();
+        // Observe all artwork images
+        document.querySelectorAll(".artwork-image[data-src]").forEach((img) => {
+          imageObserver.observe(img);
+        });
+      }
 
-        // Console welcome message
-        console.log('🎨 Artisan Gallery initialized successfully!');
-        console.log('Admin credentials: username = "admin", password = "Aa123456"');
-        console.log('Press Ctrl+Shift+A for quick admin access');
-        console.log('Features: Profile editing, artwork upload, comments, likes, search');
+      // Enhanced error handling and user feedback
+      window.addEventListener("error", function (e) {
+        console.error("Gallery Error:", e.error);
+        // Could implement user-friendly error notifications here
+      });
+
+      // Save state before page unload
+      window.addEventListener("beforeunload", function () {
+        if (isLoggedIn) {
+          localStorage.setItem("lastLoginTime", Date.now());
+        }
+      });
+
+      // Auto-logout after inactivity (optional security feature)
+      let inactivityTimer;
+      function resetInactivityTimer() {
+        clearTimeout(inactivityTimer);
+        if (isLoggedIn) {
+          inactivityTimer = setTimeout(
+            () => {
+              alert("You have been logged out due to inactivity.");
+              logout();
+            },
+            30 * 60 * 1000,
+          ); // 30 minutes
+        }
+      }
+
+      // Track user activity
+      ["mousedown", "mousemove", "keypress", "scroll", "touchstart"].forEach(
+        (event) => {
+          document.addEventListener(event, resetInactivityTimer, true);
+        },
+      );
+
+      // Initialize inactivity timer
+      resetInactivityTimer();
+
+      // Console welcome message
+      console.log("🎨 Artisan Gallery initialized successfully!");
+      console.log(
+        'Admin credentials: username = "admin", password = "Aa123456"',
+      );
+      console.log("Press Ctrl+Shift+A for quick admin access");
+      console.log(
+        "Features: Profile editing, artwork upload, comments, likes, search",
+      );
     </script>
-</body>
+  </body>
 </html>
